@@ -1,0 +1,36 @@
+JDK java development kit：java 开发工具包 从96年开始发布 目前到2021年九月14日 JDK17
+JDK包含了JRE 和JVM 
+由于java是高级语言 编写的java程序不能直接被机器识别运行，可以使用javac将java程序翻译成字节码文件 然后通过java执行字节码 到VM中去执行 VM驱动操作系统 操作系统驱动CPU去计算
+
+命令行窗口的常用命令： 切换盘符  直接 D: F：即可  进入某个文件夹 cd  返回上层文件夹 cd.. 返回跟盘符cd\ 清屏：cls
+
+#入门程序helloworld  开发java程序的三个步骤 1.编写代码 2.编译代码 3.运行代码  java的一个特性是一次编译 到处运行，编译是通过javac编译成字节码文件将.java编译成.class文件然后就可以被虚拟机接收运行使用java命令执行
+#输出hello world
+public class HelloWorld{
+  public static void main(String [] args){
+    System.out.println("hello world");#必须得是双引号啊 单引号还不太行
+  }
+}
+运行想编译 javac HelloWorld.java  系统自动生成一个.class文件  然后使用java HelloWorld 运行，但是从JDK11开始支持java直接运行.java文件
+
+机器语言：00011110000110101 二进制
+汇编语言
+高级语言
+
+JDK的组成、及跨平台原理
+  JDK中最核心的：JVM java 虚拟机 真正运行java程序的地方 
+  JDK还包括JRE  JRE指的是java的运行环境，JRE包括JVM且包括核心类库 即 JRE=核心类库+JVM
+  JDK还包括开发工具（java javac），JDK=JRE+开发工具
+  java之所以可以跨平台的原因是sun公司很贴心的为主流操作系统都开发了一个虚拟机来运行编译好的字节码文件。
+JAVA的流行IDE（集成开发环境）：
+  可以进行代码智能提示 项目管理以及自动补全
+IDEA项目结构：
+  project （项目工程）
+  module（模块）
+  package（包）
+  class（类）
+  IDEA中的一些快捷键：
+    ctrl+d 复制当前数据到下行
+    ctrl+y 删除当前行 Ctrl+x也可以
+    Ctrl+alt+l 格式化代码
+    ctrl+/ 对代码格式化
