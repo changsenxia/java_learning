@@ -1,0 +1,73 @@
+程序一共有三个流程结构：顺序结构、选择结构（if switch）、循环结构(for  while do while)。用这三个结构能够解决所有的问题 关键在于如何巧妙的运用这三种架构来解决问题。
+1.if  分支 有三种格式：1）if （）{} 2） if（）{} else{} 3）if（）{} else if（）{}...else{}
+2.switch分支 格式：switch(表达式){case 值1： break；case 值2： break; default: 表达式}
+  switch 注意事项：1.表达式的类型只能是 byte short char int（从JDK5开始支持枚举数据类型，JDK7开始支持 String类型）不支持 float、double、long。2.case值不能相同且不能是变量 3.不能忘记写break不然会出现穿透现象
+3.循环结构 for 循环结构就是反复实现  for（初始化条件;循环条件;迭代语句）{循环体语句}
+这里推荐菜鸟工具 可以在线执行java代码 看看对不对：https://c.runoob.com/compile/10/
+for 循环案例：1.求1-5之间的数据和：
+ int sum=0;
+ for(int i=1;i<=5;i++){
+    sum+=i;
+ }
+ System.out.println("和为"+sum)
+案例2.求1-10之间的奇数和
+int sum=0;
+for(int i=1;i<=10;i+=2){
+  sum+=i;
+}
+System.out.println("1-10之间的奇数和为"+sum);
+案例3.求水仙花树
+  分析：首先如果不是输入不是三位数 则之间爆处不是水仙花数  如果是接着往下，分别求出个位、十位、百位 然后求出立方和 最后看是否相等。还要知道个数
+  int num=0
+  for(int i=100;i<=999;i++){
+    int ge=i%10;
+    int shi=(i/10)%10;
+    int bai=i/100;
+    if (ge*ge*ge+shi*shi*shi+bai*bai*bai==i){
+    System.out.println("水仙花数"+i);
+    num++;
+    }
+  }
+  System.out.println("总共有"+num+"个水仙花数");
+  4.while循环结构  while(表达式){}
+  for循环与while循环的区别：
+    知道循环次数的可以使用for 不知道循环几次的用while
+  while循环案例：珠穆朗玛峰
+  double h=0.1;
+  int i=0
+  while(h<8848860){
+    h*=h;
+    i++;
+  }
+  System.out.println("需要叠"+i"次才能折成珠穆朗玛峰的高度");
+    while 循环还有一个do{}while();结构
+    还有死循环：while (true)/ for(;;)
+    死循环案例：密码验证，系统密码是520 输入密码验证不对的话则重新输入 且输出密码错误
+    flag=true;
+    String pw="520";
+    while(flag){
+      System.out.println("请输入密码：")
+      Scanner sc=new Scanner(System.in);
+      String in_pw=sc.next();
+      if (in_pw==pw){ System.out.println("验证成功，欢迎进入系统"); flag=false;}
+      else{System.out.println("密码输入错误 请重新输入")}
+    }
+    
+    案例技术分析：Random类 1.导包 （无需人工操作）2.创建Random对象 Random rd=new Random() 3.调用对象方法
+    来玩一个猜数字的游戏
+    分析：首先现有Random类创建一个随机数作为target，然后一个死循环一直猜 直到猜到为止。
+    Random r=new Random();
+    int target= r.nextInt(10);
+    Scanner sc=new Scanner (System.in);
+    int num=0;
+    while (true){
+      System.out.println("请输入一个数字（0-9）");
+      num++;
+      int source=sc.nextInt();
+      if(source==target){
+        System.out.println("恭喜你猜对了！");
+        break;
+      }
+    }
+    System.out.println("你一共猜了"+num+"次")
+    到此为止 已经全部掌控了程序的流程控制全部内容
