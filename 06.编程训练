@@ -1,0 +1,88 @@
+在经过上面的基础语句、基础语法、数组、导包、scanner、random以及方法的学习后，来几个案例来巩固一下
+案例1.买飞机票
+public static double sale(double sale,int ca,int month){
+        double result = 0;
+        if(!(month>=1&month<=12)){
+            System.out.println("输入错误的月份 应该在1-12之间的整数，请重新输入！");
+        }
+        if(month>=5&month<=10) {
+            if (ca == 0) {
+                System.out.println("现在的头等舱打九折！");
+                 result=sale * 0.9;
+            } else {
+                System.out.println("现在的经济舱打8.5折");
+                result= sale*0.85;
+            }
+        }
+        else if(month>=11&month<=12|month>=1&month<=4){
+            if(ca==0){
+                System.out.println("现在的头等舱打7折");
+                result= sale*0.7;
+            }
+            else{
+                System.out.println("现在的经济舱打6.5折");
+                 result= sale*0.65;
+            }
+        }
+        return result;
+    }
+案例2.找素数
+ public static int ispre(){
+        boolean flag=true;
+        int j=0;
+        int sum=0;
+        for(int i=101;i<=200;i++){
+            for(j=2;j<=sqrt(i);j++){
+                if(i%j==0){
+                    break;
+                }
+            }
+            if (j==(int)sqrt(i)){
+                sum++;
+                System.out.println(i);
+            }
+
+        }
+        return sum;
+    }
+ 案例3.验证码 定义一个方法随机产五位验证码，每位可能是数字、大写字母、小写字母
+ public static String yanz(int num){
+        String str="";
+        Random d=new Random();
+        for(int i=1;i<=num;i++){
+            //生成一个随机字符：数字、大写、小写
+            int type=d.nextInt(3);
+            switch (type){
+                case 0://daxie A(65)-Z(65+25)
+                    char ch=(char)(d.nextInt(26)+65);
+                    str+=ch;
+                    break;
+                case 1: //xiaoxie
+                    char ch1 = (char)(d.nextInt(26)+97);
+                    str+=ch1;
+                    break;
+                case 2://数字
+                    int ch2=d.nextInt(9);
+                    str+=ch2;
+                    break;
+            }
+        }
+        return str;
+    }
+    案例4.数组元素复制 把一个数组中的元素复制到另一个新数组中
+    public static int[] copy(int[]arr){
+        int[]c=new int[arr.length];
+        for (int i=0;i<arr.length;i++){
+            c[i]=arr[i];
+        }
+        return c;
+    }
+    案例5.评委打分
+   
+
+    
+    
+    
+    
+    
+    
