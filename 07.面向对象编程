@@ -125,6 +125,50 @@ public class ShopCar {
         System.out.println("添加成功");
     }
 }
+下面会学习构造器 通过学习构造器会知道对象具体是调用什么代码得到的 能够快速为对象赋值
+构造器是定义在类中，可以用于初始化类的对象，并返回对象的地址
+构造器的格式：修饰符 类名（形参列表）{}#相当于就是一个初始化
+构造器又分为无参构造器和有参构造器，其中无参构造器是默认存在的，有参构造器在初始化对象时创建的同时可以初始化属性。
+默认是有无参构造器的，下面是一个有构造器的Car类源码：
+public class Car {
+    //构造器
+    public Car(){
+
+    }
+    public Car(String name,double price){
+        this.price=price;
+        this.name=name;
+    }
+    //成员变量
+    String name;
+    double price;
+    //行为
+    public void start(){
+        System.out.println(this.name+"启动了");
+    }
+    public void run(){
+        System.out.println("价值"+this.price+"的"+this.name+"跑起来了");
+    }
+
+    public static void main(String[] args) {
+        Car c=new Car();
+        c.run();
+        c.start();
+    }
+}
+  关于构造器的注意事项：
+    1.默认有无参构造器，一旦定义了有参构造器 就得手写一个无参构造器才行。
+this关键字
+  this可以出现在构造器和方法中。this代表的是当前对象的地址。
+  this关键字的作用与python中的self类似，可以用于指定访问当前对象的成员变量和方法。
+
+
+
+
+
+
+
+
 
 
 
