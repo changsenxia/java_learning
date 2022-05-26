@@ -16,6 +16,115 @@ Public class 类名{
 成员变量的完整定义格式： 修饰符 数据类型 变量名=初始值 修饰符的作用在后面会提到。
   对象在内存中的工作机制:主要还是方法区、栈内存、堆内存。方法区里存的是一些字节码，栈内存里存放的是一些个方法以及变量、堆内存里存放一些new出来的。
 垃圾回收：当堆内存中的对象，没有被任何变量引用时，就会被判定为内存中的“垃圾”。
+java自己有自动垃圾回收机制。
+下面来一个例子来巩固面向对象编程：模拟购物车模块  在面向对象编程中 万物皆为对象 需要用 那就创建一个类 用类实例化一个对象来搞。
+public class ShopCar {
+    public static void main(String[] args) {
+        //定义商品类
+        //定义购物车对象  使用容器  用数组表示
+        Goods[] car=new Goods[100];//定义只能存放100个商品对象
+        //搭建操作架构
+        while(true) {
+            System.out.println("请你选择如下命令进行操作：");
+            System.out.println("添加商品到购物车：add");
+            System.out.println("查询商品到购物车：query");
+            System.out.println("通过id来更新商品：update");
+            System.out.println("结算购买商品的金额：pay");
+            Scanner sc = new Scanner(System.in);
+            String order = sc.next();
+            switch (order) {
+                case "add":
+                    //添加商品到购物车
+                    add(car, sc);
+                    break;
+                case "query":
+                    //查询商品
+                    queryGoods(car);
+                    break;
+                case "pay":
+                    //总金额
+                    pay(car);
+                    break;
+                case "update":
+                    //更新购物车
+                    update(car,sc);
+                    break;
+                 default:
+                     System.out.println("没有这种功能！");
+                     break;
+            }
+        }
+
+    }
+
+    public static void update(Goods[] car,Scanner sc) {
+        System.out.println("请输入id：");
+        int id=sc.nextInt();
+        if(car[0]==null)
+            System.out.println("购物车为空！请先添加商品！");
+        for (int i = 0; i < car.length; i++) {
+            if(car[i]==null)
+                break;
+            if(car[i].id==id){
+                System.out.println("请输入要修改的数量：");
+                int new_num=sc.nextInt();
+                car[i].buyNumber=new_num;
+            }
+        }
+    }
+
+    public static void pay(Goods[] car) {
+        double sum = 0.0;
+        for (int i = 0; i < car.length; i++) {
+            if(car[i]==null)
+                break;
+            sum+=car[i].price*car[i].buyNumber;
+
+        }
+        System.out.println("购物车总价格为"+sum+"元");
+    }
+    /**
+     * 查询购物车中的商品对象信息并展示
+     * */
+    public static void queryGoods(Goods[] car) {
+        if(car[0]==null)
+            System.out.println("购物车为空！请先添加商品！");
+        for (int i = 0; i < car.length; i++) {
+            if(car[i]==null)
+                break;
+            System.out.println("id为"+car[i].id+"的"+car[i].name+"他的价格为"+car[i].price+"一共添加了"+car[i].buyNumber+"件");
+
+        }
+    }
+    /**
+     * 完成商品添加到购物车功能
+     * */
+    public static void add(Goods[] car,Scanner sc) {
+        //录入商品信息
+        System.out.println(" input a id :");
+        int id=sc.nextInt();
+        System.out.println("输入购买商品的名称：");
+        String name=sc.next();
+        System.out.println("输入购买商品的数量：");
+        int buyNumber=sc.nextInt();
+        System.out.println("输入购买商品的price：");
+        double price=sc.nextDouble();
+        //吧信息封装成一个商品对象
+        Goods good=new Goods();
+        good.id=id;
+        good.buyNumber=buyNumber;
+        good.price=price;
+        good.name=name;
+        //将商品放入数组
+        for(int i=0;i<car.length;i++){
+            if(car[i]==null){
+                car[i]=good;
+                break;
+            }
+        }
+        System.out.println("添加成功");
+    }
+}
 
 
 
