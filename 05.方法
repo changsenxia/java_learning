@@ -31,4 +31,44 @@
         }
         return num[max];
     }
- 
+方法的内存原理：
+ 方法没有调用的时候跟字节码一起在方法区总保存 一旦被调用则进入栈内存中运行。
+方法的参数传递机制：分为基本类型的参数传递和引用类型的参数传递
+基本类型的参数传递是值传递  引用类型的参数传递是地址传递
+java中参数分为实参和形参，实参就是在方法内被定义的参数 形参是参数列表中声明的参数 形参是不占存储空间的。
+值传递案例：
+案例1：打印整型数组内容
+public static void print(int []arr){
+        for(int i=0;i<arr.length;i++)
+            System.out.println(arr[i]);
+    }
+案例2.从数组中查询指定元素的索引
+public static void index(int []arr,int m){
+        for(int i=0;i<arr.length;i++){
+            if (m==arr[i]){
+                System.out.println(i);
+            }
+        }
+案例3。比较任意两个整型数组的内容是否一样
+public static boolean same(int[]a,int [] b){
+        if(a.length!=b.length)
+            return false;
+        int i=0;
+        for(i=0;i<a.length;i++){
+            if(a[i]!=b[i])
+                break;
+        }
+        if(i==a.length)
+            return true;
+        else
+            return false;
+    }
+方法的重要内容 方法重载
+方法重载：在同一个类中，出现多个名称相同，但是形参列表是不同的，那这些方法就是重载方法
+方法的重载根据形参的个数和形参的类型来实际运行。
+识别：只关心 方法名一不一样 形参列表一不一样（是指形参的个数、类型、顺序不关心形参名称是否一致） 不关心修饰符是不是一样
+
+
+
+
+
