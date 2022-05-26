@@ -95,8 +95,31 @@ public static double sale(double sale,int ca,int month){
         average=(double)sum/4;
         return average;
     }
+案例6.模拟双色球  业务分析 随机生成一组中奖号码。用户输入一组双色球号码，判断中将情况。
+        public static int []createarr(){
+        //动态定义一个七个数字的数组
+        int [] arr1=new int [7];
+        //遍历七个位置，为每个位置生成对应号码
+        Random r=new Random();
 
-
+        for (int i=0;i<6;i++){//前六个是不重复的1-33的号码
+            int data=r.nextInt(33)+1;
+            //必须判断之前是否出现过
+            if(i==0)
+                arr1[i]=data;
+            for(int j=0;j<i;j++){
+                if (data==arr1[j]){
+                    while(data!=arr1[j]){
+                        data=r.nextInt(33)+1;
+                    }
+                }
+            }
+        }
+        //前六个号码已经有了 为第七个位置生成一个1-16的号码作为蓝球
+        int data2=r.nextInt(15)+1;
+        arr1[6]=data2;
+        return arr1;
+    }
 
     
     
