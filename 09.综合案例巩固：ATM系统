@@ -1,1 +1,154 @@
 经过了以上的学习 面向对象、封装以及String类、ArrayList类的学习 下面来一个综合案例  ATM系统来进一步巩固面向对象编程的知识
+代码如下：
+public class ATMSystem {
+    public static void main(String[] args) {
+        ArrayList<count> arr = new ArrayList();
+        Scanner sc = new Scanner(System.in);
+        while (true) {
+            System.out.println("==========welcome to changsen's ATM System=============");
+            System.out.println("1.登录账户");
+            System.out.println("2.注册账户");
+            System.out.println("请输入你的选择：");
+            int inOption = sc.nextInt();
+            if (inOption == 1)
+                login(arr);
+            else if (inOption == 2)
+                register(arr);
+            else
+                System.out.println("请输入正确的数字!");
+        }
+    }
+    public static void register(ArrayList<count> arr) {
+        Scanner sc = new Scanner(System.in);
+        Random r = new Random();
+        String str = "";//这里的str就是代表id
+        System.out.println("请输入户主姓名：");
+        String name = sc.next();
+        for (int i = 0; i < 6; i++) {
+            int in = r.nextInt(10);
+            str += in;
+        }
+        String inPw;
+        while (true) {
+            System.out.println("请您设置密码：");
+            inPw = sc.next();
+            System.out.println("请确认密码：");
+            String rePw = sc.next();
+            if (rePw.equals(inPw)) {
+
+                break;
+            } else
+                System.out.println("两次输入的密码不一致，请重新设置！");
+        }
+        System.out.println("请设置单次限额金额：");
+        double limi = sc.nextDouble();
+        count c = new count(str, name, 0.0, limi, inPw);
+        arr.add(c);
+        System.out.println("您的卡号为"+str);
+        System.out.println("注册成功！");
+    }
+    public static void login(ArrayList<count> arr){
+        if(arr.size()==0)
+            System.out.println("当前无账号请先去注册！");
+        else {
+            System.out.println("请输入卡号：");
+            Scanner sc = new Scanner(System.in);
+            String inId = sc.next();
+            int i = 0;
+            count t=new count();
+            while (true) {
+                for (i = 0; i < arr.size(); i++) {
+                    t = arr.get(i);
+                    if (inId.equals(t.getId())) {
+                        System.out.println("请输入密码：");
+                        String inPw = sc.next();
+                        if (inPw.equals(t.getPw())) {
+                            run(t,arr);
+                        } else {
+                            System.out.println("您输入的密码错误请重新输入！");
+                        }
+                    }
+                }
+                if (i == arr.size() + 1)
+                    System.out.println("输入卡号错误请查验！请重新输入！");
+            }
+        }
+    }
+    public static void run(count t,ArrayList<count> arr){
+        System.out.println("========"+t.getName()+"欢迎来到长森的ATM系统========");
+
+        System.out.println("请选择您所需的服务：");
+        showuser(t,arr);
+
+    }
+    public static void showuser(count t,ArrayList<count> arr){
+        System.out.println("=========用户操作页=======");
+        System.out.println("1.查询账户");
+        System.out.println("2.存款");
+        System.out.println("3.取款");
+        System.out.println("4.转账");
+        System.out.println("5.修改密码");
+        System.out.println("6.退出");
+        System.out.println("7.注销");
+        System.out.println("请选择:");
+        Scanner sc=new Scanner(System.in);
+        int command=sc.nextInt();
+        switch (command){
+            case 1:System.out.println("您的余额为"+t.getMoney());
+                System.out.println("您单次转账限额为"+t.getLimit());
+                System.out.println("您的卡号为"+t.getId());
+                break;
+            case 2:
+                System.out.println("请输入要存款的金额：");
+                Scanner sc1=new Scanner(System.in);
+                double mon=sc.nextDouble();
+                t.inmoney(mon);
+                System.out.println("存款成功！");
+                break;
+            case 3:
+                System.out.println("请输入要存款的金额：");
+                Scanner sc2=new Scanner(System.in);
+                double mon2=sc2.nextDouble();
+                t.outmoney(mon2);
+                System.out.println("取款成功！");
+                break;
+            case 4:
+                transfer(sc,arr,t);
+                break;
+            case 5:    
+                 break;
+            case 6:
+                System.out.println("退出成功 感谢您的使用！");
+                return;
+            case 7:
+                delete(arr,t);
+                break;
+        }
+                
+
+
+    }
+    public static void transfer(Scanner sc,ArrayList<count> arr,count t){
+        while(true) {
+            System.out.println("请输入你要转账的账户：");
+            System.out.println("请输入你要转账的金额：");
+            String outId = sc.next();
+            double oMoney = sc.nextDouble();
+            count t2;
+            for (int i = 0; i < arr.size(); i++) {
+                t2 = arr.get(i);
+                if (outId.equals(t2.getId())) {
+                    if (oMoney <= t.getLimit()) {
+                        t.transferMoney(t2, oMoney);
+                        break;
+                    } else
+                        System.out.println("金额不足！");
+                }
+            }
+        }
+    }
+        public static void delete(ArrayList<count> arr,count t){
+            arr.remove(t);
+        }
+}
+通过这次学习 我对于面向对象编程的能力又提高了不少 收获良多！
