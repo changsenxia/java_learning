@@ -28,4 +28,25 @@ for (int i = 0; i < arr.size(); i++) {
         }
         System.out.println(arr);
 需要注意的是  集合中的遍历删除或数组中的遍历删除 需要考虑到一个漏删问题，一般可以使用从后往前删，如果使用的是正向删除的话就每次删除将指针往前调一位 以防漏删！
-案例2.存储自定义类型对象：
+案例2.存储自定义类型对象 使用影片信息在程序中的展示
+//创建一个电影类 定义一个集合存储电影对象,创建三个电影对象 封装相关信息 并且将电影对象存入集合！，遍历集合 输出
+        ArrayList<Film> f=new ArrayList<>();
+        Film f1=new Film();
+        Film f2=new Film();
+        Film f3=new Film();
+        f1.setName("大话西游");
+        f1.setPrice(65);
+        f1.setScore(8.8);
+        f2.setName("战狼2");
+        f2.setPrice(65);
+        f2.setScore(9.2);
+        f3.setName("寒战");
+        f3.setPrice(20);
+        f3.setScore(9.1);
+        f.add(f1);
+        f.add(f2);
+        f.add(f3);
+        for (int i = 0; i < f.size(); i++) {
+            System.out.println("评分为"+f.get(i).getScore()+"的"+f.get(i).getName()+"的票房为"+f.get(i).getPrice());
+        }
+
