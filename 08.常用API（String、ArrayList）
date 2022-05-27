@@ -26,9 +26,33 @@ String类常见面试题：
  String类的常用API
  1.equals（）：用于对比两个String对象 只关心内容是不是一样。
  2.equalsIgnoreCase():忽略大小写的比较！
- 3.public int length()
- 4.public char charAt()
- 5.public char[] toCharArray():
- 6.public String subString(int beginIndex,int endIndex)
- 7.public String replace(CharSequence target,CharSequence replacement)
- 8.public String [] split(String regex)
+ 3.public int length()//返回字符串的长度
+ 4.public char charAt(int i)//返回字符串在索引i处的字符
+ 5.public char[] toCharArray()://返回字符串元素组成的数组
+ 6.public String subString(int beginIndex,int endIndex)//返回一个子字符串从 beginindex开始到endindex结束，是一个左闭右开区间。
+ 7.public String replace(CharSequence target,CharSequence replacement)//将target替换为replacement
+ 8.public String [] split(String regex) //按照regex正则切分
+ 9.public boolean contains(charSequence s)//看是否包含这个子字符串
+ 10.public boolean startswith(string prefix)
+ 11.public boolean endswith(string prefix)
+ 下面是一些String 案例：
+ 案例1：用String类开发验证码功能
+ 需求：随机产生一个五位数的验证码，每位可能是数字、大写字母（65）、小写字母（97）
+ public class StringAnli {
+    public static void main(String[] args) {
+        //1.generate a yanzm with length of five,can be number,a-z,A-Z;
+        Random d=new Random();
+        String res="";
+        String datas="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        //上面是可能会出现的所有字符 下面搞一个五个循环 然后随机抽取即可
+        for (int i = 0; i < 5; i++) {
+            int t=d.nextInt(62);
+            res+=datas.charAt(t);
+        }
+        System.out.println(res);
+    }
+}
+案例2.模拟登陆
+
+
+
