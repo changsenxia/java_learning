@@ -1,0 +1,13 @@
+API：别人做好的类 我们直接调用就好！
+这次的学习通过String和ArrayList类的学习来入门
+String 类定义的变量可以用于存储字符串。java给了很多string的功能
+学习内容：1.如何创建String类对象 2.String的内存原理 3.String类提供的那些API 4.用String类解决响应问题
+String类提供的常用功能：1.字符串内容比较 2.遍历 3.截取 4.替换 5.分割
+
+ArrayList类代表的是集合类，集合是一个容器类，ArrayList与数组类似 但不同的是集合的大小是不固定的！
+一般都是通过ArrayList类的对象得到一个集合容器。
+学习内容：1.如何通过ArrayList创建对象 2.ArrayList的常用功能 添加、获取、删除、修改等 3.ArrayList如何存储自定义对象 4.用ArrayList解决实际问题
+
+下面是String类的具体学习
+String类代表的是一个字符串 java中的所有双引号变量都是此类的对象
+String类创建后的对象不能被更改
