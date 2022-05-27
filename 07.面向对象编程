@@ -161,15 +161,59 @@ public class Car {
 this关键字
   this可以出现在构造器和方法中。this代表的是当前对象的地址。
   this关键字的作用与python中的self类似，可以用于指定访问当前对象的成员变量和方法。
-
-
-
-
-
-
-
-
-
-
-
-
+面向对象的三大特征：封装、继承、多态
+下面学习封装： 封装即正确设计对象的属性和方法
+封装的原则：对象代表什么、就是封装对应的数据提供数据对应的行为
+既然封装有这么多好处 如何更好地封装？
+  1.建议对成员变量用private（私有、隐藏）关键字进行修饰（private修饰的变量只能在当前类中访问），在其他类中调用时报错的
+  2.对于用private修饰的成员变量 必须要用对应的public（对外公开 在别的类中也可以调用）修饰的setter和getter方法来取值和赋值  
+标准javabean
+  javabean的中文意思是实体类，即在生活中有对应个体的叫实体类。下面需要学习标准javabean的书写要求：
+    1.成员变量用private
+    2.用private修饰的变量 应该提供对应的public修饰的setter和get方法来获取和设置
+    3.构造无参构造器，有参构造器可写可不写
+下面通过一个面向对象的案例来巩固
+案例：用面向对象的思想来模仿电影信息展示
+public class film {
+    private String name;
+    private double price;//票房
+    private String [] actor;
+    private String area;
+    private String [] director;
+    private double scores;//评分
+    public String getName(){
+        return name;
+    }
+    public void setName(String name){
+        this.name= name;
+    }
+    public double getPrice(){
+        return price;
+    }
+    public void setPrice(double price){
+        this.price=price;
+    }
+    public void getactor(){
+        for (int i = 0; i < actor.length; i++) {
+            if(actor[i]!=null){
+                System.out.println(actor[i]);
+            }
+            else
+                break;
+        }
+    }
+//    public void addactor(){
+//        for (int i = 0; i < actor.length; i++) {
+//            if(actor[i]!=null){
+//                System.out.println(actor[i]);
+//            }
+//            else
+//                break;
+//        }
+//    }
+    public double getScore(){
+        return scores;
+    }
+    public void setScore(double scores){
+        this.scores=scores;
+    }
