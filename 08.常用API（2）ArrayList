@@ -1,0 +1,20 @@
+集合与数组类似，是一种容器 用于装数据
+但是数组的长度是固定的，类型也是确定的。造成一个问题 在长度不确定时 数组不太合适作为容器
+集合特征适合长度不固定且要进行增删改查的业务场景，集合还提供了很多丰富好用的功能！（这一点很重要！）
+总的来说，数组适合类型固定且长度固定的容器，集合是类型不固定长度不固定的容器。
+ArrayList是集合的一种，和数组一样支持索引。
+如何创建ArrayList对象：ArrayList arr=new ArrayList（）；
+集合对象的方法add（E e）//添加任意数据类型的数据
+add（int insert，Ee）//在位置insert处插入任意类型的数据
+虽然集合可以装任意类型的元素 并没有要求说集合内应该是同一类型的元素，但是还是尽量不要混合。
+ArrayList<E> 是一个泛型类，可以在编译阶段约束集合对象只能操作某种数据类型。
+例如：ArrayList<String> //这个集合只能操作字符串类型的元素
+集合中只能存放引用类型！不支持基本数据类型！！！！
+以后定义集合只能定义泛型！
+下面学习一些常用API：
+1.public E get（index）:获取该索引处的元素
+2.public int size(): 获取集合规模
+3.public E remove(int index):去除index处的元素
+4.public boolean remove(Object o):删除集合中的元素 返回删除成功与否
+5.public E set(ine index.E e):设置index处的元素为e 并返回e
+数组中访问元素通过索引 ArrayList中也是一样！ 通过get（i）来获取。
