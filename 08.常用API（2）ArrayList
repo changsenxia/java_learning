@@ -18,3 +18,14 @@ ArrayList<E> 是一个泛型类，可以在编译阶段约束集合对象只能�
 4.public boolean remove(Object o):删除集合中的元素 返回删除成功与否
 5.public E set(ine index.E e):设置index处的元素为e 并返回e
 数组中访问元素通过索引 ArrayList中也是一样！ 通过get（i）来获取。
+下面通过几个案例来巩固集合的所学！
+案例1.遍历删除
+for (int i = 0; i < arr.size(); i++) {
+            if(arr.get(i)<80){
+                arr.remove(i);
+                i-=1;
+            }
+        }
+        System.out.println(arr);
+需要注意的是  集合中的遍历删除或数组中的遍历删除 需要考虑到一个漏删问题，一般可以使用从后往前删，如果使用的是正向删除的话就每次删除将指针往前调一位 以防漏删！
+案例2.存储自定义类型对象：
