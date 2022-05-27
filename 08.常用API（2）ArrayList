@@ -49,4 +49,40 @@ for (int i = 0; i < arr.size(); i++) {
         for (int i = 0; i < f.size(); i++) {
             System.out.println("评分为"+f.get(i).getScore()+"的"+f.get(i).getName()+"的票房为"+f.get(i).getPrice());
         }
+案例3.通过id插叙所需对象信息！ 这个案例要记住！String判断相等应该是用equals（）！
+public static void main(String[] args) {
+        //定义一个集合来存储
+        ArrayList<Student> s=new ArrayList<Student>();
+        Student s1=new Student("20180302","叶孤城",23,"护理一班");
+        Student s2=new Student("20180303","东方不败",23,"推拿二班");
+        Student s3=new Student("20180304","西门吹雪",26,"中药学四班");
+        Student s4=new Student("20180305","梅超风",26,"神经科2班");
+        s.add(s1);
+        s.add(s2);
+        s.add(s3);
+        s.add(s4);
+        for (int i = 0; i < s.size(); i++) {
+            System.out.println("学号为"+s.get(i).getId()+"的学生是"+ s.get(i).getAge()+"的"+  s.get(i).getStu_class()+"的"+  s.get(i).getName());
+        }
+//        System.out.println(s.get(0).getId());
+        while(true){
+            System.out.println("请输入你要搜索的学号id：");
+            Scanner sc=new Scanner(System.in);
+            String inId=sc.next();
+            pre(s,inId);
+        }
+    }
+    public static Student pre(ArrayList<Student> n, String id){
+        //遍历集合
+        Student stu2=new Student();
+        for (int i = 0; i < n.size(); i++) {
+
+            if(n.get(i).getId().equals(id)){
+                stu2=n.get(i);
+                break;
+            }
+        }
+        System.out.println("学号为"+id+"的学生是"+ stu2.getAge()+"的"+ stu2.getStu_class()+"的"+ stu2.getName());
+        return stu2;
+    }
 
