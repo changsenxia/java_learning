@@ -1,1 +1,66 @@
+建包语句： package 包名 即可建包
+导包 相同包的类可以直接访问，但是不同包的类则需要导包才行 通过import 包名.类名  导包可以 自动导
+如果一个类中要使用不同包中的相同名称的类 那么只能导入一个类 其它的类要使用全称来访问。
+  权限修饰符：用来控制一个成员能够被访问的范围
+权限修饰符总共有四种：private->缺省->protected->public  范围由小到大。
+private 修饰分成员只能在当前类中访问 
+缺省的成员只能在当前类和同一个包中的其他类访问
+protect修饰的智能在当前类、同一包的其他类 以及不同包的子类访问
+public 修饰的其他的类都能使用。
+下面用代码演示一下：
+  public class test2 extends Fu {
+    public static void main(String[] args) {
+        Fu f=new Fu();
+        //f.method();//因为缺省的属于包权限，在别的包下不能使用。
+        //f.pMethod();//被protected修饰的只能在同一类、包权限 以及子类中能实现
+       test2 t=new test2();
+        f.publicMethod();
+        t.pMethod();
+    }
 
+}
+
+自己定义成员（方法、变量、构造器）一般满足条件如下：
+  1.成员变量应该私有 
+  2.方法应该公开
+  3.如果该成员智能本类访问 用private访问
+  
+final关键字
+  可以修饰 类、方法和变量
+  用final修饰类 表示该类不能被继承
+  用final修饰方法 表示该方法不能被重写
+  用final修饰变量 表示该变量智能被赋值一次 
+  final修饰基本类型的数据 表示基本类型数据的值不能改变  
+  final修饰引用类型的数据 表示该变量地址不能变，当时地址可以改变
+  
+常量：常量就是用public static final 修饰的成员变量！ 必须要有初始值
+常量的好处：可以用于系统的配置信息、方便程序维护、同时提高可读性。
+例如：
+  public static final String NAME="彦祖夏"
+  public static final LOGIN_ADDR="jiangsu"
+常量的规定：1.变量应该全部大写 2.多个单词用下划线连接起来。
+  常量在编译阶段就把常量全部替换了。
+通过案例学习常量 ：
+  开发一个超级玛丽游戏，需要接收用户输入的四个方向的信号（上下左右），以便控制玛丽移动的方向 用了很多不会的  额   先不看代码 主要了解个功能就完事了！
+枚举类型：java中的一种特殊类型
+作用：用来做信息的标志和分类
+定义格式 ： 修饰符 enum 枚举名称{每一行都是罗列枚举类实例的名称}
+例如：enum Season{SPRING，SUMMER，AUTUM，WINTER；}
+反编译后 源码为：
+  public final class Season extends java.lang.Enum<Season>{
+    public static final Season SPRING=new Season();
+    public static final Season SUMMER=new Season();
+    public static final Season AUTUM=new Season();
+    public static final Season WINTER=new Season();
+    public static Season[] values();
+    public static Season valueOf(java.lang.String);
+  }
+枚举特征 ：枚举都是继承了枚举类型的最终类 不可被继承，构造器都是私有的 不能创建对象。第一行默认 都是罗列枚举对象的名称。
+枚举的作用及使用场景：还是分类问题
+
+抽象类：
+  什么是抽象类：abstract关键字  可以修饰类 可以方法 如果用abstract修饰类 该类是一个抽象类  用abstract修饰一个方法的话该方法是一个抽象方法
+  例如： 修饰符 abstract 类名{}        修饰符 abstract 返回值类型 方法名（）{} 
+  
+  
+  
