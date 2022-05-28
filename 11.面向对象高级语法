@@ -60,7 +60,61 @@ final关键字
 
 抽象类：
   什么是抽象类：abstract关键字  可以修饰类 可以方法 如果用abstract修饰类 该类是一个抽象类  用abstract修饰一个方法的话该方法是一个抽象方法
-  例如： 修饰符 abstract 类名{}        修饰符 abstract 返回值类型 方法名（）{} 
+  例如： 修饰符 abstract 类名{}        修饰符 abstract 返回值类型 方法名（）{} 、
+  注意事项：
+    1.抽象方法不能有方法体 
+    2.一个类中定义了抽象方法 这个类也要改成抽象类
+  抽象类用于被子类继承，抽象方法约束了子类一定要重写去重新实现。
+通过一个案例来巩固抽象类和抽象方法：某加油站推出了两种支付卡，一种预存10000的金卡，后续加油享8折优惠，另一种预存5000的银卡，后续享8.5折
+类有的东西 抽象类 都有  抽象类不一定有抽象方法 但是有抽象方法的地方一定是抽象类。
+不能用abstract修饰变量、代码块以及内部类
+抽象类不能创建对象.....：用反证法来解答  假如抽象类可以创建对象 方法并不能运行。
+
+final 和abstract 是互斥关系：final修饰类  修饰类不能被继承  abstract修饰类就是要类被继承的。所以互斥
+
+抽象类应用：模板方法模式 ：场景 当系统中出现同一个功能多处在开发，该功能中大部分代码一样，只有其中部分可能不同的时候
+模板方法模式步骤：
+  1.把功能定义成一个所谓的模板方法，放在抽象类中，模板方法只定义通用且确定的代码
+  2.把不能决定的代码功能定义为一个抽象方法 让子类去实现。
+案例：写作文案例  有两类学生 中学生和小学生 都要写《我的爸爸》这篇论文，每种类型的学生 标题的第一段和最后一段内容必须一样，正文自己发挥。
+分析：定义一个抽象学生类，先输出标题和第一段 然后定义一个抽样方法，最后输出最后一段。
+public abstract class Student {
+    public void write(){
+        System.out.println("《我的爸爸》");
+        System.out.println("第一段：------------");
+        this.writem();
+        System.out.println("最后一段------------");
+    }
+    public abstract void writem();
+}
+class StudentChild extends Student {
+
+    @Override
+    public void writem() {
+        System.out.println("我是小学生写的论文中间段！");
+    }
+}
+class StudentMiddle extends Student {
+
+    @Override
+    public void writem() {
+        System.out.println("我是中学生写的论文中间段！");
+    }
+}
+
+public class Test {
+    public static void main(String[] args) {
+        //理解模板方法模式
+    StudentChild s1=new StudentChild();
+    StudentMiddle s2=new StudentMiddle();
+    s1.write();
+    s2.write();
+    }
+}
+
   
+
+
+
   
   
