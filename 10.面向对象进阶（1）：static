@@ -20,6 +20,37 @@ static 是静态的意思 可以修饰成员变量和成员方法，static修饰
 静态方法的内存原理：
   1.方法首先是都存储在方法区 当类被加载到方法区的时候 静态方法会同时在方法区被存储，所以可以不创建对象通过类名来调用
   当一个新的类对象被创建出来后，成员变量都存在堆方法区 堆内存中的方法变量中存储的是该方法在方法区的地址！
-  
-  
-  
+static 的注意事项：
+  1.静态方法只能访问静态成员  不可以直接访问实例成员
+  2.实例方法可以访问静态成员，也可以访问实例成员
+  3.静态方法中不可以出现this关键字。
+
+static 工具类： 类中都是一些静态方法，每个方法都是以完成一个共用功能为目的 这个类是用来给系统开发人员来调用使用的！
+由于工具类里的方法都是静态方法，所以工具类无需创建对象，所以可以将工具类的构造器进行私有！ 直接用private修饰即可。
+下面通过一个案例巩固static工具类知识，案例为定义数组工具类：
+public static String checkCode(){
+        String str="";
+        String originalCode="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        Random r=new Random();
+        for (int i = 0; i < 4; i++) {
+            int index=r.nextInt(originalCode.length());
+            str+=originalCode.charAt(index);
+        }
+        return str;
+    }
+    private ArraysUtils(){};
+代码块：  类的5大组成成分：成员变量、方法、构造器、代码块、内部类！
+代码块应该定义在类中 方法外。
+在java类下，使用大括号{}括起来的都被成为代码块！！！
+
+
+静态代码块 ：格式 static{}  随着类的加载而加载 并且自动触发 且只执行一次！
+作用：用于初始化静态资源！
+
+实例代码块 ：格式 {} 
+每次创建对象，调用构造器时都会执行该代码块中的代码！在构造器前执行！！！
+
+
+
+
+
