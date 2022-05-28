@@ -47,10 +47,50 @@ public static String checkCode(){
 静态代码块 ：格式 static{}  随着类的加载而加载 并且自动触发 且只执行一次！
 作用：用于初始化静态资源！
 
-实例代码块 ：格式 {} 
+实例代码块 ：格式 {}  （见得很少）
 每次创建对象，调用构造器时都会执行该代码块中的代码！在构造器前执行！！！
+作用：初始化实例资源！
+下面来一个静态代码块的应用案例：
+案例：斗地主游戏 初始化牌！
+public class StaticTest {
+    //定义一个静态牌集合
+    public static ArrayList<Card> c=new ArrayList<Card>();
+    //在程序真正运行前 把54张牌放进去
+    static{
+        //正式做牌
+        String []num={"3","4","5","6","7","8","9","10","J","Q","K","A","2"};
+        String [] colo={"♥","♦","♠","♣"};
+        for (int i = 0; i < num.length; i++) {
+            for (int i1 = 0; i1 < colo.length; i1++) {
+                c.add(new Card(num[i],colo[i1]));
+            }
+        }
+        c.add(new Card("小鬼"));
+        c.add(new Card("大鬼"));
+    }
+    public static void main(String[] args) {
+        //模拟游戏启动前 初始化54张牌
+        System.out.println("新牌：");
+        show1(c);
+    }
+    public static void show1(ArrayList<Card> a){
+        for (int i = 0; i < a.size(); i++) {
+            a.get(i).show();
+        }
+    }
+}
 
-
+static应用： 单例设计模式
+单例：保证使用该类的只有一个实例！类只能产生一个对象！
+实现：
+1.将构造器私有化  在外部不可通过构造器创建对象
+2.创建一个静态变量 用于存储对象！
+饿汉单例  就是想创建好对象了 相用的时候直接用就好
+懒汉单例  真正需要对象的时候才去创建对象（延迟加载对象！）
+  1.构造器私有 
+  2.定义一个静态变量
+  3.提供一个返回单例对象的方法
+  
 
 
 
