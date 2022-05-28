@@ -111,7 +111,7 @@ public class Test {
     s2.write();
     }
 }
-
+模板方法建议用final修饰  防止子类修改模板方法。
   
 
 
