@@ -72,7 +72,71 @@
   6.BigDecimal    大数据类型 用于解决浮点运算的数据失真问题 使用BigDecimal时需要将数据封装为BigDecimal对象可以使用如下两个方法
     1）BigDecimal bd1=new BigDecimal（"0.1"）//以字符串的形式传入数值
     2）BigDecimal bd2=BigDecimal.ValueOf(0.1)//使用该方法
-  1.bd1.add(bd2)
-  2.bd1.substract(bd2)
-  3.bd1.multiply(bd2)
-  4.bd1.divide(bd2) 
+      1.bd1.add(bd2)
+      2.bd1.substract(bd2)
+      3.bd1.multiply(bd2)
+      4.bd1.divide(bd2) 
+  7.时间类
+    1）Date类 表示当前所在系统的此刻日期时间
+    构造器：Date（） 代表系统当前此刻时间
+    常用方法：getTime（） 获取时间对象的毫秒值 从70年1月1日 0点
+    还有一个构造器 Date（long time）将时间毫秒值转化为当前Date对象
+    还可以通过setTime（long time）将时间毫秒值转化为Date对象
+  8.SimpleDateFormat 可以将时间转换成我们喜欢的格式
+    1.将Date对象转化为我们喜欢的时间格式
+    2.将时间毫秒值转换成我们喜欢的格式
+    3.将字符串转化为我们喜欢的格式
+  构造器 SimpleDateFormat（）构造一个SimpleDateFormat对象，使用默认格式
+    SimpleDateFormat（String pattern）使用指定格式
+    format（Date date）
+    Date format（object time）将时间转化为日期/时间格式   字符串！！！
+    解析字符串时间成为日期对象 parse(String source)
+    案例：计算出2021年08月06日11点11分11秒 往后走2天14小时49分06秒后
+  public class SimpleFormatDEmo {
+    public static void main(String[] args) throws ParseException {
+        SimpleDateFormat s=new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
+        String str="2021年08月06日 11:11:11";
+        Date d=s.parse(str);
+        System.out.println(d);
+        long time=d.getTime()+((((2L*24)+14)*60+49)*60+6)*1000;
+        Date e=new Date();
+        System.out.println(s.format(time));
+    }
+}
+用一个案例 巩固一下 ：
+public class SimpleDemo {
+    public static void main(String[] args) throws ParseException {
+    //需求：秒杀活动，开始时间  2020年，11月11日，0:0:0 结束时间 2020年11月11日 0:10:0 用代码说明两名同学有没有参加上线上活动
+        SimpleDateFormat s1=new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
+        SimpleDateFormat s2=new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
+        String st1="2020年11月11日 00:00:00";
+        String end="2020年11月11日 00:10:00";
+        Date d1=s1.parse(st1);
+        Date d2=s2.parse(end);
+        long sta=d1.getTime();
+        long end2=d2.getTime();
+        long gap=end2-sta;
+        String li="2020年11月11日 00:03:47";
+        String pi="2020年11月11日 00:10:11";
+        Date l1=s1.parse(li);
+        Date p1=s1.parse(pi);
+        long lt1=l1.getTime();
+        long pt1=p1.getTime();
+        long lg=lt1-sta;
+        long pg=pt1-sta;
+        if(lg<=gap)
+            System.out.println("小李抢到了！");
+        else
+            System.out.println("小李没抢到！");
+        if (pg<=gap)
+            System.out.println("小皮抢到了！");
+        else
+            System.out.println("小皮没抢到！");
+    }
+
+}
+
+  
+  
+  
+  
