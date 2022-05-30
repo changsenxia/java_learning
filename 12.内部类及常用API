@@ -1,0 +1,78 @@
+内部类概述：类的五大成分之一了，分别是构造器、成员变量、成员方法、代码块、内部类
+定义：定义在一个类里面的类 里面的类可以看成寄生，外面的类可以看成宿主。
+内部类使用场景：
+1.当一个事物的内部还有一个部分需要完整的结构进行描述，内部的完整结构又只为外部事物服务
+2.内部类可以访问外部类的私有成员
+3.内部类封装很好内部类 可以使用 private protected等修饰 类里面的变量也可以  可以做更多的控制！、
+  内部类的分类：
+  1.静态内部类
+  2.成员内部类
+  3.局部内部类
+  4.匿名内部类（重点）
+1.静态内部类 用static修饰 与普通类类似 只是在类的内部实现罢了
+  内部类创建对象的格式：外部类.内部类 对象名称=new 外部类.内部类
+  静态内部类可以访问外部类的静态成员 但是...不能直接访问外部类的实例成员 因为外部类的实例成员只能通过对象访问
+2.成员内部类： 无static修饰 属于外部类的对象  （jdk16以前成员内部类中是不可以定义静态对象的 但是jdk16后可以支持了！）
+创建格式： Outer.Inner in=new Outer().new Inner();
+成员内部类既可以访问静态成员也可以直接访问实例成员！
+成员内部类中想访问外部类对象 用 外部类.this去访问！
+3.局部内部类（鸡肋）
+  局部内部类放在方法、代码块、构造器等执行体中（？）
+
+4.匿名内部类（重点！！！）
+本质上是一个没有名字的局部内部类
+作用：方便创建子类对象，简化代码编写
+格式： new 类|抽象类名|接口名（）{重写方法（实现重写方法）；}
+匿名内部类写出来就会产生一个匿名内部对象
+匿名内部类的对象类型就相当于抽象类的子类。
+
+常用API
+  1.Object类：Object是java中的祖宗类：
+    1.toString：默认返回 当前对象在堆内存中的地址信息：类的权限名@内存地址  
+    toString是想被子类继承重写！！！！
+    2.equals：默认是比较两个变量的地址是否相同！
+  2.Objects是Object类的子类
+    主要还是看equals方法还有isNull（）就是判断该对象是不是null。
+  3.StringBuilder 这是一个可变字符串类，
+    作用：提高字符串效率
+    格式：StringBuilder str=new StringBuilder（String str）
+    1）添加：append（任意类型！！！）
+    2）reverse（）；字符反转
+    3）length（）：返回长度
+    4）toString（）实现将StringBuilder转换为String。
+ 通过一个案例来巩固StringBuilder   打印整型数组内容： 
+  public class Anli {
+    //设计一个方法输出任意整型数组的内容，要求输出格式：该数组内容为：[11,22,33,44,55]
+    public static void main(String[] args) {
+        int  [] a={11,22,33,44,55};
+        System.out.println(arrToStr(a));
+    }
+    public static String arrToStr(int[] a){
+        StringBuilder str=new StringBuilder("[");
+        for (int i = 0; i < a.length-1; i++) {
+            str.append(a[i]).append(",");
+        }
+        str.append(a[a.length-1]).append("]");
+        String str1=str.toString();
+        return str1;
+    }
+}
+  4.Math类  属于工具类  不需要构造对象 构造器被私有
+    1.abs()
+    2.ceil()
+    3.floor()
+    4.round()
+    5.max()
+    6.pow(a,b) 返回a的B次方
+    7.random（） 返回double的随机值 范围[0.0,1.0)
+  5.System类 也是工具类 不能创建对象的 构造器被private封装好了
+    1.exit(int status)
+    2.currentTimeMillis() 返回当前系统的时间毫秒数值
+    3.arrycopy(数据源组，起始索引，目的地数组，起始索引，拷贝个数)
+  6.BigDecimal    大数据类型 用于解决浮点运算的数据失真问题 使用BigDecimal时需要将数据封装为BigDecimal对象可以使用如下两个方法
+    1）BigDecimal bd1=new BigDecimal（"0.1"）//以字符串的形式传入数值
+    2）BigDecimal bd2=BigDecimal.ValueOf(0.1)//使用该方法
+  1.bd1.add(bd2)
+  2.bd1.substract(bd2)
+  3.bd1.multiply(bd2)
+  4.bd1.divide(bd2) 
