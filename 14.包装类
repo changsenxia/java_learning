@@ -1,0 +1,15 @@
+包装类实际上就是八种数据类型对应的引用类型
+  byte Byte
+  short Short
+  int Integer
+  long  Long 
+  char  Character
+  float Float 
+  double Doubole 
+  boolean Boolean
+因为java的一切皆对象的思想，为每个基本数据类型都提供了对应的引用类型。
+后面的集合和泛型只能支持包装类型！！！！不支持基本类型
+
+包装类的一些方法可以把字符串类型的值转化为真实的数据类型！！！！！！！
+例如：Integer.parseInt("字符串类型的整数")
+Double.parseDouble("字符串类型的double")
