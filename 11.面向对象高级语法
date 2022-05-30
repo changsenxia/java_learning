@@ -136,3 +136,137 @@ private void go(){sout（"--准备--"）}
   3.一个类继承了父类 又实现了接口  如果有同名的方法 默认先用父类的
   4.一个类实现多个接口，多个接口中存在同名的默认方法，不冲突 类重写该方法就行
   5.接口可以多继承没有问题
+面向对象的第三大特征：多态！（至此面向对象的三大特征 已经全部结束  封装、继承、多态！）
+具体表现为：同类型的对象，执行同一个行为，会有不同表现。
+常见形式：
+  1.父类类型 对象名称= new 子类构造器；
+  2.接口 对象名称=new 实现类构造器
+即 多态的实现方法有两种  一种是通过父类类创建对象但是使用子类构造器，一种是通过接口创建对象但是使用实现类构造器。
+多肽中成员访问特点：
+  方法调用：编译看左边，运行看右边
+  变量调用：编译看左，运行也看左（多态侧重 行为多态不是变量多态）
+多态的前提：
+  有继承或实现关系
+多态的优势：
+  1.右边对象可以实现解耦合，便于扩展和维护
+  2.定义方法时，使用父类为参数，该方法可以接受该类的一切子类对象
+多态的缺点：不能调子类的独有功能。
+
+引用类型的类型转换（子到父）：这是默认的类型转换
+强制类型转换 子类 子类对象=（子类）父类对象
+这种强制类型抓换可以解决多态的缺陷，让其可以调用子类的独有功能。 不能乱转 要符合真实类型
+可以使用instanceOf判断当前对象的真实对象  变量 instanceOf 类名
+
+来一个综合案例来锻炼一下
+public class Test {
+    public static void main(String[] args) {
+    //使用oop模拟：设计一个电脑对象，可以安装两个USB接口
+        //鼠标 被安装时 可以完成接入、调用点击功能，拔出功能
+        //键盘 被安装时可以完成接入、调用打字功能、拔出功能
+        /**
+         * 分析：1.定义一个USB接口（接入和拔出）
+         * 2.提供两个实现类 代表鼠标和键盘，让其实现USB接口，分别定义独有功能
+         * 3.创建电脑对象，创建2个USB实现类对象分别安装到电脑中并触发功能执行
+         * */
+        Computer c=new Computer();
+        USB a=new Mouse();
+        USB b=new Keyboard();
+        c.setUp(a);
+        c.setUp(b);
+        c.use(a);
+        c.use(b);
+
+    }
+
+}
+class Computer {
+    private String name;
+    private String type;
+    private double price;
+
+    public Computer(String name, String type, double price) {
+        this.name = name;
+        this.type = type;
+        this.price = price;
+    }
+
+    public Computer() {
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public boolean setUp(USB a) {
+        boolean flag = false;
+        if (a instanceof Mouse) {
+            System.out.println("鼠标已安装！");
+            flag = true;
+        } else {
+            System.out.println("键盘已安装！");
+            flag = true;
+        }
+        return flag;
+    }
+
+    public void use(USB a) {
+        if (setUp(a)) {
+            if (a instanceof Mouse) {
+                System.out.println("请选择你要的功能：");
+                System.out.println("1.调用点击");
+                System.out.println("2.拔出");
+                Scanner sc = new Scanner(System.in);
+                int command = sc.nextInt();
+                switch (command) {
+                    case 1:
+                        Mouse t = (Mouse) a;
+                        t.click();
+                        break;
+                    case 2:
+                        a.out();
+                        break;
+                }
+            } else {
+                System.out.println("请选择你要的功能：");
+                System.out.println("1.调用输入");
+                System.out.println("2.拔出");
+                Scanner sc = new Scanner(System.in);
+                int command = sc.nextInt();
+                switch (command) {
+                    case 1:
+                        Keyboard t = (Keyboard) a;
+                        t.type();
+                        break;
+                    case 2:
+                        a.out();
+                        break;
+                }
+            }
+        }
+    }
+}
+
+
+
+
+  
