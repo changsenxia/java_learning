@@ -1,0 +1,16 @@
+JDK8开始新增日期类：
+  LocalDate：不包含具体时间的日期
+  LocalTime：不包含日期的时间
+  LocalDateTime：包含了日期和时间
+  Instant： 代表时间戳
+  DateTimeFormatter：用于时间格式化和解析
+  Duration：用于计算两个时间间隔（方便）
+  Period：用于计算两个日期的间隔
+  
+  
+  
+  
+  
+  
+  
+  
