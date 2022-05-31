@@ -1,1 +1,40 @@
 之前学过的ArrayList类也是属于集合的一种  他的长度不固定 而且可以支持泛型 泛型只能是引用类型 ！！
+首先 集合和数组都是容器！用于装变量的！但是数组进行增删操作是不方便的，数组只有在固定长度、同一批数据类型、比较多的是索引操作
+集合中装的是变量智能存储引用类型的数据。 不支持基本数据类型。适合增删操作，且集合的长度不需要确定！。
+  集合体系：
+Collection（单列）：每个元素只包含一个值！
+Map（双列）：每个元素包含两个值（键值对） 有点像python中的字典。
+
+Collection是一个接口！Collection分为List体系（ArrayList和LinkedList）和Set体系（HashSet 和 TreeSet）
+  1.List系列集合：添加的元素有序（先加的在前面 后加的在后面）、可重复、有索引。
+  2.Set系列集合：添加的元素无序、不重复、无索引
+    HashSet：无序、不重复、无索引  但是LinkedHashSet：有序、不重复、无索引
+    TreeSet：按照大小默认升序排序，不重复、无索引
+Collection集合的常用API：（其他的子类都可以继承过去可以用的）
+1.boolean add() //添加对象
+2.Collection clear()//清楚集合
+3.boolean isEmpty()//判断是否为空
+4.int size()//返回大小
+5.boolean contains()//区分大小写判断是否包含
+6.boolean remove(Object o)//默认删第一个 去除元素
+7. Object toChar（）把集合转化为数组 
+8.addall（） 添加整个列表
+  遍历Collection集合的三种方式：1.迭代器 2.for循环 3.lambda表达式
+迭代器在java中代表是Iterator。迭代器是集合的专用遍历方式
+方法一：使用迭代器步骤：1.调用Collection.iterator()方法 默认指向索引为0的元素 2.Iterator中的常用方法有 1）boolean hasNext（） 判断是否还有下一个元素 2）next（）获取当前元素并指向下一个
+方法二：foreach/增强for循环：既可以遍历数组也可以遍历集合。
+  格式：for（元素数据类型 变量名：数组或Collection集合）{sout（）}
+方法三：lambda表达式：Collection结合lambda遍历的API forEach（）  l.forEach( s-> System.out.println(s));//l为集合
+用Collection集合存储自定义数据类型：使用泛型 Collection<Film> c=new ArrayList(); 
+  常见数据结构：栈、队列、数组、链表、二叉树、红黑树
+数据结构是计算机底层存储、数据组织的方式 是指  数据相互之间以什么方式排列在一起。
+  1.栈：后进先出，先进后出。
+  2.队列：先进先出、后进后出：从后端入队、前端出
+  3.数组 ：内存中的一个连续区域。查询速度很快！根据索引查询。删除效率低！添加效率也低（增删效率都低）
+  4.链表：链表中的元素是内存中不连续存储的，每个元素节点包含数据值和下一个元素的地址。查询会慢、但是添加、删除都会很方便！插入的时候只需把插入数据的下一个地址指向后面的元素 前面的后一个地址指向插入数据即可！
+  链表分为单向链表和双向链表
+  
+  
+
+
+
