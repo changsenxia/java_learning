@@ -1,0 +1,18 @@
+Arrays类适用于数组操作工具类
+常用API：
+  1.String toString（数组）  将数组元素转换成字符串返回（包括中括号！）
+  2.void sort（数组） 数组排序
+  3.对于比较器排序
+  4.binarySearch（数组，key）
+二分搜索： 
+  前提：数组必须排好序！！！且最好元素不重复  每次都从中间开始查找
+  如果数组不是有序单一数组 就不会有想要的结果！
+Arrays类对于Comparator比较器的支持
+  Arrays.sort(age, new Comparator<Integer>() {//参数1是一个被排序的数组  参数2是一个匿名内部类对象
+            @Override
+            public int compare(Integer integer, Integer t1) {
+                //自己制定规则
+                return 1;//如果你想要左边的数大于右边的数 那就返回一个正数！会降序排序 如果左边的数小于右边的数 会升序排序。返回0则相等
+            }
+        });
+  Comparator是一个接口类，需要重写一个函数才能新建匿名内部类对象。操作的数组是什么类 Comparator<类型>自己设置排序规则。
