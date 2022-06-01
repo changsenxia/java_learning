@@ -1,1 +1,115 @@
-今天要学的有 Set系列的集合 以及集合工具类！ 然后来一点集合案例，还有Map集合还要来一个集合的嵌套。
+今天要学的有 Set系列的集合 以及集合工具类(可以对集合进行快速元素的添加、排序)！ 然后来一点集合案例，还有Map集合还要来一个集合的嵌套。
+Set也是一个接口 有HashSet和TreeSet两个实现类 Set的底层原理是一个哈希表！！！！
+Set 无序、不重复（去重复）、无索引
+实现类的特点
+HashSet：无序、不重复、无索引
+LinkedHashSet：有序、不重复无索引
+TreeSet：排序、不重复、无索引
+  HashSet底层是基于哈希表存储的数据。
+  哈希值：JDK根据对象的地址按照某种规则算出来的int类型的数值。
+  获取哈希值：Object类有一个API public int hashCode（）;返回对象的哈希值
+同一个对象调用的哈希值是相同的。
+HashSet jdk7的原理：数组+链表+哈希算法
+1.先创建默认长度为16的数组 数组名为table
+2.根据元素的哈希值与长度求余计算存入的位置（哈希算法）
+3.如果当前位置为null则直接存入！
+4.如果位置不为null，有元素，则调用equals方法比较  如果一样则不存 不一样则存入数组（jdk7  新元素 存入数组  老元素成链表  jdk8 挂在下面）
+
+HashSet 从jdk8开始  数组+链表+红黑树
+当挂在元素下面的数据过多时（当链表长度超过8时）自动转换为红黑树
+  HashSet如何去重复的？  重写类的hashcode以及equals方法
+LinkedHashSet：有序、无重复、无索引(用一个双链表来记录存放顺序）
+
+TreeSet：不重复、无索引、可排序（大小顺序） 底层是基于红黑树排序的。
+但是对于自定义类型对象，需要制定比较规则！！！
+格式：
+  Set<E> s=new Set<>(new Comparactor)
+
+可变参数：
+  案例：如果定义个方法求和，该方法可以灵活的完成如下需求：1.计算两个数据的和、计算三个数据的和、计算n个数据的和甚至可以不接收参数求和进行调用
+  可变参数用在形参中可以接收多个数据。
+  可变参数： 数据类型...参数名称
+注意事项：
+  1.一个形参列表总可变参数智能有一个
+  2.可变参数必须放在列表最后面
+
+集合工具类：Collections 用于操作集合的工具类
+  常用API：
+  1.集合中的元素按照默认元素排序 Collections.sort(List l) //只能对List类的集合
+  2.Collections.sort（List l,new Comparactor()）
+  3.addAll()
+  4.shuffle(List l) 打乱List集合
+  
+  来一个小案例：斗地主！
+  public class doudizhu {
+    //54张牌需要一个集合
+    public static List<Card>l=new ArrayList<Card>();
+    //初始化牌数据
+    static {
+        String[] size = {"3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A", "2"};
+        String[] color = {"♠", "♥", "♣", "♦"};
+        int index = 0;
+        for (int i = 0; i < size.length; i++) {
+            index++;
+            for(int j =0;j<color.length;j++){
+            l.add(new Card(size[i],color[j],index));
+            }
+        }
+        l.add(new Card("王","小",++index));
+        l.add(new Card("王","大",++index));
+        System.out.println(l);
+    }
+    public static void main(String[] args) {
+        Collections.shuffle(l);//洗牌
+        System.out.println(l);
+        //定义三个玩家类 发牌！
+        List<Card>c1=new ArrayList<Card>();
+        List<Card>c2=new ArrayList<Card>();
+        List<Card>c3=new ArrayList<Card>();
+        //开始发牌  发51张牌 剩余三张作为底牌！
+        for (int i = 0; i < l.size()-3; i++) {
+            Card a=l.get(i);
+            switch(i%3){
+                case 0:c1.add(a);break;
+                case 1:c2.add(a);break;
+                case 2:c3.add(a);break;
+            }
+        }
+        List<Card> LastThree=l.subList(l.size()-3,l.size());
+        System.out.println("排序前：");
+        System.out.println(c1);
+        System.out.println(c2);
+        System.out.println(c3);
+        System.out.println("排序后：");
+        //排序
+        sortCard(c1);
+        sortCard(c2);
+        sortCard(c3);
+        //输出
+        System.out.println(c1);
+        System.out.println(c2);
+        System.out.println(c3);
+        System.out.println(LastThree);
+    }
+
+    private static void sortCard(List<Card> c) {
+        Collections.sort(c, new Comparator<Card>() {
+            @Override
+            public int compare(Card card, Card t1) {
+                return card.getIndex()-t1.getIndex();
+            }
+        });
+    }
+}
+
+  Map集合 双列集合 键值对 元素格式：key=Value （键=值）
+完整格式{key1=value1,key2=value2,key3=value3}
+使用场景：适合购物车这种场景下很适合！
+使用最多的Map是HashMap。 键不允许重复，值可以重复！
+Map集合的特点都是由键决定的，键是无序、不重复、无索引的，但是值可以重复  
+
+
+
+
+
+  
