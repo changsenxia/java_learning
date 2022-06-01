@@ -107,9 +107,50 @@ TreeSet：不重复、无索引、可排序（大小顺序） 底层是基于红
 使用场景：适合购物车这种场景下很适合！
 使用最多的Map是HashMap。 键不允许重复，值可以重复！
 Map集合的特点都是由键决定的，键是无序、不重复、无索引的，但是值可以重复  
+HashMap：无序、不重复、无索引
+LinkedMap：按照key值有序、不重复、无索引
+TreHashMap：按照键排序，不重复，无索引 值不做要求
 
-
-
-
-
+常用API：
+  1.添加元素 put（k,v）;
+  2.删除元素 remove(k);
+  3.移除所有 clear();
+  4.判断集合是否包含指定的键 ContainsKey()
+  5.判断是否包含指定的值 ContainsValue（）
+  6.判断是否为空 isEmpty();
+  7.长度  size（）
+  8.根据键取对应的value值 Map.get（Key）
+  9.获取所有的键值 keySet（）
+  10.获取所有的值的集合 valueSet（）
+  11.扩展其他Map putAll（）
+遍历Map：  
+1.键找值
+  1.先获取Map所有键的集合
+  2.遍历key值
+2.键值对
   
+  
+  Map集合案例 统计投票人数
+public class Test {
+    public static void main(String[] args) {
+        String [] selects={"A","B","C","D"};
+        StringBuilder sb=new StringBuilder();
+        Random r=new Random();
+        for (int i = 0; i < 80; i++) {
+            sb.append(selects[r.nextInt(selects.length)]);
+        }
+        //sb里面就是存放的选择
+        System.out.println(sb);
+        Map<Character,Integer>maps=new HashMap<>();
+        for (int i = 0; i < sb.length(); i++) {
+            char ch=sb.charAt(i);
+         if(maps.containsKey(ch)){
+             maps.put(ch,maps.get(ch)+1);
+         }
+         else{
+             maps.put(ch,1);
+         }
+        }
+        System.out.println(maps);
+    }
+}  
