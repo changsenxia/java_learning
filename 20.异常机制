@@ -1,0 +1,87 @@
+异常是指 程序在“编译”或执行过程中可能出现的问题，比如 索引越界、空指针异常、日期格式化异常等等...
+  异常一旦出现，若没有提前处理，程序就会退出JVM虚拟机而终止。
+  研究异常并且避免异常，提前处理异常，体现程序的健壮性！
+异常分为：Error（错误）和Exception（异常）。异常分为 运行时的异常及其子类 和除了运行的异常以外的异常（编译时异常）
+错误是系统级别的问题，JVM退出、代码无法控制等。
+运行时的异常在编译时不会报错的！（运行时异常，运行字节码文件可能出现的异常）
+其他的成为编译时异常（在javac成为class文件是需要处理的异常）
+  为什么要学习异常？1.要避免异常 2.还要处理可能出现的异常！！！
+常见的运行时异常：
+  1.索引越界异常
+  2.空指针异常 //nullPointerException
+  3.数学操作异常
+  4.类型转换异常//classCastException
+  5.数字转换异常//NumberFormatException
+运行时异常是程序员技术不行 导致的错误！
+
+常见的编译型异常：（必须处理！否则代码不通过） 担心程序员技术不行 提醒一下，目的在于提醒不要出错
+  1.转换异常（1.可以抛出去 2.用try/catch）
+异常默认处理流程：从异常出现的点 报错 出现异常对象 然后上报给Main（）方法然后上传给JVM虚拟机然后 虚拟机沙雕程序
+
+编译时异常的处理机制：
+1.出现异常直接抛出去给调用者，调用者也继续抛出去！  方法 throws 异常1，异常2...或 直接 throws Exception。
+2.出现异常自己捕获 不麻烦别人
+3.出现异常抛出去给调用者调用者捕获异常
+
+第二种：
+  try...catch...
+  监视捕获异常，用在方法内部，可以用方法内部出现的异常直接捕获处理。捕获异常后 自己独立完成
+  格式：
+  try{可能出现异常的代码}catch(异常类型1 变量){//处理异常} catch（异常类型2 变量）{//处理异常
+  Ctrl+alt+t快捷键用于快速包围代码块！
+  建议用一个Catch  
+    try{可能出现异常的代码}catch(Exception 变量){//处理异常} Exception 可捕获一切异常！
+ 异常处理第三种方式：先抛再处理（因为自己处理，调用的方法不知道是否被调用！）
+异常处理使代码更稳健的案例： 
+  public class Test3 {
+    public static void main(String[] args) {
+        Scanner sc=new Scanner(System.in);
+        while(true){
+            try {
+                System.out.println("请输入价格：");
+                String price=sc.nextLine();
+                double pri=Double.valueOf(price);
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+            }
+
+        }
+    }
+}
+自定义异常：
+  1.首先定义一个继承Exception的异常类
+  2.重写构造器
+  3.在出现异常的的地方用throw new
+  throws 用在方法声明上 抛出方法内部
+  throw 在方法内部创建一个新建异常对象
+案例：
+public class Test4 {
+    public static void main(String[] args) {
+        //认为年龄小于0岁大于200岁就是一个异常
+        try {
+            checkage(-34);
+        } catch (com.changsen.d2_exception.ageIllegal ageIllegal) {
+            ageIllegal.printStackTrace();
+            System.out.println("请确认年龄");
+        }
+    }
+    public static void checkage(int a) throws ageIllegal {
+        if (a < 0||a>200){
+            throw new ageIllegal(a+"是非法的！");
+        }else{
+            System.out.println("年龄合法 推荐商品！");
+        }
+    }
+}
+class ageIllegal extends Exception{
+    public ageIllegal() {
+    }
+
+    public ageIllegal(String message) {
+        super(message);
+    }
+
+}
+
+  
+  
