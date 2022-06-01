@@ -2,3 +2,71 @@
 
 不可变集合就是不可以被修改的集合。
 Stream流
+  得益于lambda带来的函数式编程，引入了Stream流，目的在于用于简化集合（Collections）和数组操作（Arrays）的API。
+通过一个案例来体验Stream流作用：
+public class Tiyan {
+    public static void main(String[] args) {
+        List<String> l=new ArrayList<String>();
+//        l.add("张无忌");
+//        l.add("周芷若");
+//        l.add("赵敏");
+//        l.add("张强");
+//        l.add("张三丰");
+        Collections.addAll(l,"张三丰","周芷若","赵敏","张强","张三丰");
+        //把以张开头的元素存储到一个新的集合中
+        List<String>l2=new ArrayList<String>();
+        for (int i = 0; i < l.size(); i++) {
+            if(l.get(i).startsWith("张")){
+                l2.add(l.get(i));
+            }
+        }
+        System.out.println(l2);
+        //找名称长度为三的名字
+        List<String>l3=new ArrayList<String>();
+        for (String name:l
+             ) {
+            if(name.length()==3)
+                l3.add(name);
+        }
+        System.out.println(l3);
+        //用Steam流试试
+        //System.out.println(l.stream().filter(s -> s.startsWith("张")).filter(s -> s.length() == 3));
+    }
+}
+
+Stream流的思想和使用步骤：
+  1.先得到集合或数组的stream流（集合名/数组名.stream()）
+  2.用stream流简化的API操作数据。
+如何获取stream流：1.集合：集合名.stream（） 2.数组 Arrays.stream(int []arr)
+stream还有一个终结方法：只有一个终结方法，是流水线的最后一个操作
+Stream流常见操作方法：（中间方法）  支持链式编程
+1.filter() //对流上的数据进行过滤
+2.limit（）//限制前几个数
+3.long count() //计数
+4.skip(num)//跳过前num个
+5.map（）//加工方法例子  li6.st.stream().map(s->"帅气的"+s)  第一个是原材料 第二个是加工后的
+6.concat（）//合并流。
+7.distinct（）//去除重复元素
+来一个Stream流的综合案例！
+public class Test2 {
+    public static double sum=0.0;
+    public static void main(String[] args) {
+        List<Employee> l1=new ArrayList<>(4);
+        List<Employee> l2=new ArrayList<>(5);
+        l1.add(new Employee("猪八戒","男",30000,25000,null));
+        l1.add(new Employee("孙悟空","男",25000,1000,"顶撞上司"));
+        l1.add(new Employee("沙僧","男",20000,20000,null));
+        l1.add(new Employee("小白龙","男",20000,25000,null));
+
+        l2.add(new Employee("武松","男",15000,9000,null));
+        l2.add(new Employee("李逵","男",20000,10000,null));
+        l2.add(new Employee("西门庆","男",50000,100000,"被打"));
+        l2.add(new Employee("潘金莲","女",3500,1000,"被打"));
+        l2.add(new Employee("武大郎","女",20000,0,"下毒"));
+        Employee Topper= l1.stream().max((e1,e2)-> Double.compare(e1.getSalary()+e1.getAward(),e2.getSalary()+e2.getAward())).get();
+        Employee Topper2= l2.stream().max((e1,e2)-> Double.compare(e1.getSalary()+e1.getAward(),e2.getSalary()+e2.getAward())).get();
+        //2.统计平均工资
+        l1.stream().sorted((e1,e2)-> Double.compare(e1.getSalary()+e1.getAward(),e2.getSalary()+e2.getAward())).skip(1).limit(l1.size()-2).forEach(e->{sum+=(e.getSalary()+e.getAward());});
+        System.out.println("开发一部的平均工资是："+(sum/(l1.size()-2)));
+    }
+}
