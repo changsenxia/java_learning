@@ -1,1 +1,27 @@
+目前最优秀的日志框架技术：logback
+日志技术的作用？ 记录程序运行中的信息 可以永久存储！
+以前记录用输出语句，但是这样有很多弊端： 只能展示在控制台、不能记录到其他位置（数据库）、取消信息修改源代码很麻烦。
+  1.日志可以将系统执行的信息选择性的记录到指定位置
+  2.可以以开关的形式控制是否记录！
+  3.多线程性能好！
+日志技术体系：
+  日志有Common Logging（接口！简称jcl）规范、SimpleLoggingFacadeforJava（接口！简称slf4j）规范！
+  要用日志框架来实现接口  可以直接拿来使用！（学习很牛的logback技术（实现了slf4j））
+logback分为三个技术模块：分别为logback-core（属于基础、必须要有的！）、logback-classic（属于是log4j的改良版本 实现了slf4j的API）、logback-access
+导入logback日志技术到项目中，来记录项目信息
+1.在项目下新建lib（directory），将logback三个文件复制到lib下 并且全选add as library。
+2.将logback下的核心配置文件xml直接拷贝到src中！
+3.在代码中获取日志对象 ：
+  public static final Logger LOGGER=LoggerFactory.getLogger("对象");
+logback的系统特性都是通过logback.xml控制的
 
+logback输出位置、格式设置;
+1..xml中的<append>标签可以设置输出位置和日志信息的详细格式
+2.通常设置一个控制台一个系统文件中
+
+日志级别：可以通过设置日志级别来控制日志的记录
+级别：
+ TRACE<DEBUG<INFO<WARN<ERROR    默认级别是debug 
+ 可以设置只输出级别不低于设定级别的日志信息！
+ 还可以设置两个极端级别  ALL OFF 要么全部打印要么全部关闭！
+ 具体在root level中设置！
