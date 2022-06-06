@@ -7,3 +7,128 @@ IO流可以读写文件。
 本节学习 要学会File类的使用（使用File类对象操作文件，如删除、获取文件信息、创建文件夹等功能）、递归方法、字符集（读数据前需要指导数据的底层实现）、IO流、字节流（音频视频）字符流
 文件对象：包括 文件和文件夹
 File类提供的功能：定位文件、获取文件本身信息、删除文件、创建文件等
+  常用API：
+  1.isDirectory（）：测试抽象路径是否为文件夹？
+  2.isFile（）：测试抽象路径是否为文件
+  3.exists(): 测试抽象路径表示的File是否存在
+  案例：
+     File f1=new File("C:\\Users\\Dell\\1.JPG");
+        //获取绝对路径
+        System.out.println(f1.getAbsolutePath());
+        System.out.println(f1.getPath());
+        //获取文件名称
+        System.out.println(f1.getName());
+        //获取文件大小
+        System.out.println(f1.length());
+        //获取文件上次更改时间
+        long time=f1.lastModified();
+        System.out.println(time);
+        System.out.println("最后修改的时间为"+new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(time));
+        //判断文件是否为文件
+        System.out.println(f1.isFile());
+        System.out.println(f1.isDirectory());
+   创建文件夹API:
+    1.createNewFile() 创建一个新的空的文件夹    基本不用  因为文件会自动创建
+    2.mkdir（） 智能创建一级文件夹 
+    3.mkdirs() 可以创建多个文件夹
+    4.delete（）删除文件和空文件夹！  智能删空文件夹 不能删除非空！
+    
+遍历文件夹！
+list（） 获取当前目录下所有的“一级名称”到一个字符串数组中去
+listFiles（）获取一级文件对象 到一个文件对象数组中去
+调用者不存在时  listFile（）返回null。当调用者是一个对象时返回null 调用者是一个空文件夹时范围一个长度为0的数组。
+
+  方法递归：就是方法直接或间接的调用自己的形式 分为直接低估和间接递归。
+  递归需要控制好终止条件。
+递归的算法流程以及核心要素：
+ 案例导学：计算1-n的阶乘！
+ public class recussionDemo1 {
+    public static void main(String[] args) {
+        System.out.println(jc(10));
+    }
+    public static int jc(int n){
+        if(n==0|n==1)
+            return 1;
+        else
+            return n*jc(n-1);
+    }
+}
+递归解决问题思路：把一个复杂问题 转化为相似的规模较小的问题来解决
+三要素：
+  1.递归公式
+  2.递归终结点
+  3.递归方向必须走向终结点
+递归常见案例：
+  1.用递归做1-n的和：
+public static int plus(int n){
+        if(n==0)
+            return 0;
+        else
+            return n+plus(n-1);
+    }
+  2.猴子吃桃问题
+  public static int peach(int n){
+        if(n==10)
+            return 1;
+        else
+            return 2*(peach(n+1)+1);
+    }
+  非规律递归：文件搜索！
+  分析：1.先定义出一级文件对象 2.遍历全部一级文件对象 判断是否是文件  3.如果是文件看是否是想要的 如果是文件夹 继续递归搜索！
+    public static void searchFile(File dir,String fileName){
+        //判断dir是否是目录
+        if(dir!=null&&dir.isDirectory()){
+            //提取当前目录下的一级对象
+            File[]files=dir.listFiles();
+            //判断是否存在一级文件对象
+            if(files!=null&&files.length>0){
+                for (File f : files) {
+                    //判断是否为文件夹！
+                    if(f.isFile()){
+                        if(f.getName().contains(fileName)){
+                            System.out.println("找到了"+f.getAbsolutePath());
+                        }else
+                        {
+                            searchFile(f,fileName);
+                        }
+                    }
+                }
+            }
+        }else{
+            System.out.println("对不起 该路径不是文件夹 不支持搜索！");
+        }
+
+IO流：由于File类只能定义文件、以及获取文件名称，并不能操作文件内容，操作文件内容还是得看IO流。、
+IO流前置知识：字符集！！！
+计算机底层是不可以直接存储字符的，只能存储0、1.计算机只能存储二进制数据。
+因为计算机底层可表示十进制编号，人类就给字符记性编码。
+  ASCII字符集：美国编码表 只有128个 对于英文和数字足够了。
+  GBK：ASCII只有英文，Windows系统默认编码，兼容ASCII 包含了几万个汉字、支持繁体汉子以及部分日韩文字。（一个中文以两个字节表示！）
+  Unicode：兼容所有的 统一码！（但是utf编码的话 中文一般以三个字节的形式存储）
+
+编码和解码相关操作：
+1.getBytes（）  返回一个字节数组
+2.getBytes（String charsetName） 使用指定字符集编码为一系列字节！
+  解码：
+1.String rs=new String (byte []) //默认utf8解码
+2.String rs=new String（byte[],"指定字符集"）//指定字符集解码
+
+IO流也叫输入输出流！就是用来读写数据的
+I表示Input 负责读 表示从硬盘文件读入到内存中！
+O表示Output 负责写 表示从内存写出到硬盘中！
+IO流也可以分为字节流和字符类！！！！！！（字符类适合文本内容！）
+字节输入：InputStream
+字节输出：OutputStream
+字符输入：Reader
+字符输出：Writer
+（以上四个都是抽象类！！）
+FileInputStream类：
+  构造器： FileInputStream（File file）创建字节输入流与源文件对象接通
+           FileInputStream（String name）输入路径、来创建接通！
+常用API：一个字节一个字节的读  （太慢了！）
+1.read（）//这种情况不好读中文  没有可读字节的时候 返回-1
+2.read（byte[] buffer） 每次读取一个字节数组 没有可读的时候返回-1
+
+
+
+
