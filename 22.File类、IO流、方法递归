@@ -127,8 +127,22 @@ FileInputStream类：
            FileInputStream（String name）输入路径、来创建接通！
 常用API：一个字节一个字节的读  （太慢了！）
 1.read（）//这种情况不好读中文  没有可读字节的时候 返回-1
+int b;
+        while ((b=is.read())!=-1){
+            System.out.println(b);
+        }
 2.read（byte[] buffer） 每次读取一个字节数组 没有可读的时候返回-1
-
-
-
-
+byte[] buffer=new byte[3];
+int len;//记录每次读取字节数
+while((len=is.read(buffer)!=-1){
+sout(new String(buffer,0,len));
+}
+  文件字节输出流
+常用的写数据API：
+1.write（int a）写一个字节出去
+2.write（byte[]buffer）
+3.write(byte[]buffer,int pos,int len)
+写完数据必须刷新 os.flush()
+释放资源 os.close()  释放资源就包括刷新了！
+  字符输入流（FileReader）
+  
