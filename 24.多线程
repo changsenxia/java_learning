@@ -114,4 +114,11 @@ schedule（TimerTask task，Date time）
 ScheduledExecutorService pool=Executors.newScheduledThreadPool(int corePoolSize)；
   
   补充知识：并发、并行、线程的生命周期
+正在运行的程序就是一个进程，线程属于进程，多个线程其实是并发与并行同时进行的！  
+CPU同时处理线程的数量时有限的。CPU会轮询为每个线程服务，但是由于CPU切换的速度很快 给我们一种同时为这些线程执行的感觉 这就是并发。
+并行：在同一时刻，同时有多个线程在被CPU处理并执行。多线程是并发与并行同时进行！
+
+线程的生命周期： 官方给线程定义了六种状态。
+NEW、RUNNABLE、BLOCKED、WAITTING、TIMED_WAITTING、TERMMINATED（新建、可运行、阻塞、无限等待、计时等待、被终止）
   
+
