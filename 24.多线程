@@ -101,5 +101,17 @@ pools.shutdown()  等全部任务完成后才关闭  建议使用不会丢失任
 线程池处理Callable任务
 Future<T> submit(Callable<T> task)  执行Callable任务，返回未来任务对象获取线程结果。
 
-
+定时器：控制任务延时调用，周期调用
+作用：闹钟、定时邮件发送。
+实现定时器的方式：方式一：Timer 方式二：ScheduledExecutorService
+构造器：public Timer（） 创建Timer定时器对象
+schedule（TimerTask task，long delay ，long period）
+schedule（TimerTask task，Date time）
+但是这个Timer执行是单线程 不太合适
+  所以可以使用 ScheduledExecutorService 来弥补Timer的缺陷，这个类的内部是一个线程池
+得到对象： public static ScheduledExecutorService newScheduledThreadPool(int corePoolSize)  得到线程池对象
+案例：创建一个对象
+ScheduledExecutorService pool=Executors.newScheduledThreadPool(int corePoolSize)；
+  
+  补充知识：并发、并行、线程的生命周期
   
