@@ -3,3 +3,41 @@
 序列化：如何将java对象如何进行保存！
 打印流：（打印流必学！）
 IO框架
+
+1.缓冲流（自带缓冲区）：成为高级流、字节流字符流称为原始流，高级流可以提升字节流和字符流读写数据的性能。
+分为 BufferedInputStream、BufferedOutputStream、BufferedReader、BufferedWriter
+字节缓冲输入流自带了8KB的缓冲池，可以直接从缓冲池中读取数据，性能较好
+字节缓冲输出流自带了8KB的缓冲池，可以写入到缓冲池中，写数据性能极高！
+  构造器：
+  BufferedInputStream（InputStream in）  包装字节输入流成字节缓冲输入流
+ 字节缓冲流跟普通的字节输出输入流的功能差不多。
+ 目前测试来看 缓冲流配合数组读写是最好的选择！
+ 
+不同编码会导致乱码，该如何解决？
+  字符流直接读取文本可能会导致乱码！
+  使用转换流
+1.先提取文件的原始字节流、原始字节不会存在任何问题
+2.然后把字节流以指定编码转换成字符输入流，这样就不会乱码了。
+字符输入转换流  InputStreamReader  搞一个构造器：InputStreamReader（InputStream in，String charsetName）
+字符输出转换流 OutputStreamWriter
+
+3.序列化对象！
+ 以内存为基准，把内存中的对象存储到磁盘文件中去，成为对象序列化。 
+ObjectOutputStream：对象字节输出流
+构造器  ObjectOutputStream（OutputStream out）  把低级字节输出流转换为高级的对象字节输出流
+oos.wirteObject() 写入对象
+对象如果要序列化  类必须要实现一个序列化接口！！！！！Serializable接口
+
+4.对象反序列化（把磁盘文件中的序列化文件取出来 恢复成内存中的对象）
+ObjectInputStream（InputStream in）  把低级字节输入流转换为 高级的输入流
+用transient 修饰 表示该变量不参加序列化
+
+5.打印流 
+  可以实现更方便、更高效的打印数据到文件中去。打印流包括 printStream、printWriter。
+  printStream 可以包装低级输出流 以及文件对象以及绝对地址。
+
+Properties：代表一个属性文件，把自己中的键值对文件存到属性文件中去。
+ 
+IO框架！ commons-io
+
+  
