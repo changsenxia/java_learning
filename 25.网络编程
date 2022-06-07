@@ -1,0 +1,98 @@
+网络编程就是让程序与网络上的其他程序进行数据交互！
+常见的通信模式 Client-Server（CS）、Browser/Server（B/S）
+客户端需要程序员开发 用户需要安装客户端  服务端也需要程序员开发！（CS模式）
+B代表Browser 浏览器不需要程序员开发实现浏览器 用户需要安装浏览器、但是程序员需要开发实现服务端！
+本节要学习1.网络通信的三要素 2.UDP通信（无需确认，无论在线与否 都发送消息） 3.TCP（基于可靠传输的通信模式）4.及时通讯5.模拟BS系统。
+1.网络通信的三要素：Ip地址、端口号、协议
+ip地址是设备在网络中的地址，是唯一的标志
+端口是程序在设备中的唯一标志
+协议是数据在网络中的传输规则，常见的有UDP和TCP协议
+IP地址分为Ipv4和Ipv6. Ipv4 有四个八位二进制数组成一共32bit
+ip地址可以分为公网地址和私有地址（局域网使用）。
+192.168.开头的就是常见的局域网、范围就是192.168.0.0-192.168.255.255 转为组织机构内部使用。
+ipconfig 查看本机ip
+pingIP地址  检查网络是否连通！
+本机IP：127.0.0.1 或者localhost 称为回送地址当前所在本机。
+
+IP地址操作类 InetAddress 
+常见API：
+1.InetAddress getLocalHost() 返回本主机的地址对象
+2.InetAddress getByName() 得到指定主机IP地址对象，参数是域名或IP地址
+3.getHostName()得到主机名
+4.getHostAddress（）得到ip地址
+
+
+端口号：标志正在计算机设备上运行的进程（程序），被规定为一个16位的二进制 范围为0-65535.
+端口类型：
+周知端口（0-1023）： 被预先定义的知名应用占用（如HTTP要占用80 FTP要占用21）。
+注册端口：（1024-49151） 分配给用户进程或某些应用程序，如Tomcat占用8080，MySQL占用3306
+动态端口：（49152-65535） 
+设计程序选择注册端口需要选择注册端口，但是一个设备不能出现两个程序端口号一致！
+
+通信协议：连接和通信数据的规则
+传输层：TCP（传输控制协议）、UDP（用户数据协议）
+TCP是一种面向连接的可靠通信的协议。
+传输前，采用“三次握手”建立连接所以是可靠的，在TCP中连接、发送数据都需要建立连接，传输完毕后，还要释放已建立的连接。通信效率低。
+TCP协议通信场景：对信息安全要求较高的场景
+断开连接：四次挥手
+客户端像服务器发出取消连接、服务器向客户端返回一个响应，表示收到客户端取消请求（并将最后的数据处理完毕）、服务器再想客户端发出确认取消的消息、客户端再次发送确认消息！
+
+UDP是一种无连接、不可靠的协议。将数据源IP、目的地IP和端口封装成数据包，不需要建立连接。
+每个数据包大小限制在64KB内，发送不管对方有没有准备好
+
+UDP通信：
+1.首先要有一个数据包对象：DatagramPacket（韭菜盘子）
+构造器：
+  1.DatagramPacket（byte[] buf,int length,InetAddress address,int port）(要发送的内容，字节数组、发送内容的字节长度、接收端的ip地址对象、接收端的端口号) 这是发送端数据包对象
+  2.DatagramPacket（byte[] buf,int length） 这是接收端数据包对象
+2.DatagramSocket：发送端和接收端对象（人）
+构造器：
+  1.DatagramSocket（） 创建发送端的Socket对象，系统随机分配一个端口号
+  2.DatagramSocket（int port）创建接收端的Socket对象并制定端口。
+DatagramSocket类的方法：
+1.send（DatagramPacket dp）  发送数据包
+2.receive（DatagramPacket dp） 接受数据包
+案例：
+ 发送端：
+   System.out.println("===客户端启动=====");
+        //创建发送端对象
+        DatagramSocket d1=new DatagramSocket();
+        //创建一个数据包对象
+        byte[] b="我是一颗快乐的韭菜，你愿意吃吗？".getBytes();
+        DatagramPacket dp1=new DatagramPacket(b,b.length,InetAddress.getLocalHost(),8888);
+        //发送数据
+        d1.send(dp1);
+        d1.close();
+ 接收端：
+    System.out.println("====服务端启动=====");
+        DatagramSocket d2=new DatagramSocket(8888);//接收端Socket对象
+        byte[]buffer=new byte[1024 *64];
+        DatagramPacket dp=new DatagramPacket(buffer,buffer.length);
+        //等待接收数据
+        d2.receive(dp);
+        //取出数据
+        int len=dp.getLength();
+        String rs=new String(buffer,0,len);
+        System.out.println("收到："+rs);
+        d2.close();
+可以通过数据包对象获取发送端的ip地址和端口
+上面的通信方式是一发和一收，下面来看多发多收
+多发多收分析：
+  1）发送端可以一直发送消息
+  2）接收端可以不断的接收多个发送端的消息展示
+  3）发送端输入了exit则结束发送端程序
+UDP可以支持广播和组播！
+单播：单台主机与单台主机之间的通信
+广播：当前主机与所在网络中的所有主机通信
+组播：当前主机与选定的一组主机通信
+使用UDP实现广播：使用广播地址 255.255.255.255
+具体操作：
+  1.发送端发送的数据包的目的地写广播地址且指定端口（255.255.255.255 9999）
+  2.本机所在网段的其他主机程序只需要匹配端口成功即可收到消息！
+使用UDP实现组播：
+  组播地址：224.0.0.0--239.255.255.255
+  具体操作：
+    1.发送端的数据包的目的地是组播ip（例如 224.0.0.1 9999）
+    2.接收端必须绑定该组播ip，端口还要对应发送目的端口999就可以接受组播
+    3.DatagramSocket的子类MulticastSocket可以在接收端绑定组播ip
+
