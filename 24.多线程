@@ -1,0 +1,105 @@
+1.什么是线程？
+  线程是一个程序内部的一条执行路径。main（）方法其实就是一条单独的执行路径
+多线程是指实现多条执行流程的技术！！！
+需要学会：
+  1.多线程的创建
+  2.Thread类的常用方法
+  3.线程的安全和同步
+  4.线程通信、线程池
+  5.定时器、线程状态
+2.多线程的创建（三种方式）
+  1）继承Thread类
+  2）实现Runnable接口
+  3）jdk5.0新增 实现Callable接口
+1）继承Thread类
+  1.定义一个MyThread子类继承Thread类并重写run（）方法  run方法定义该类以后要干啥
+  2.创建MyThread类的对象
+  3.调用对象的start（）启动线程（启动后还是执行run方法）但是是以多线程跑run方法。
+这样做的优缺点：
+优点：编码简单
+缺点：继承了Thread类 无法继承其他类 不利于类的扩展
+2）实现Runnable接口！！！
+  1.定义一个线程任务类MyRunnbale实现Runnable接口，重写run（）方法
+  2.创建MyRunnable任务对象
+  3.把任务对象交给Thread处理
+优缺点：
+优点：扩展性很强 只是实现了接口，还可以继承或实现其他接口！
+缺点：编程多一层对象包装，不能直接返回值
+
+3）实现Callable接口的方式 他们重写的run方法可以得到返回的结果
+  1.先得到一个任务对象：定义类实现Callable接口，重写call方法，封装要做的事
+  2.用futureTask把Callable对象封装成线程任务对象。
+  3.把线程任务对象交给Thread处理 调用start（）执行任务。
+  4.线程执行完毕后，通过FutureTask的get方法去获取任务执行结果。
+FutureTask的作用：1.可以将Callable对象转化为Runable对象，可以交给Thread去处理
+2.可以在线程结束后通过get（）方法得到执行完成后的结果。
+示例:
+Callable<String> c=new MyCallable(100);
+        //把Callable对象交给FutureTask
+        FutureTask<String> f1=new FutureTask(c);
+        //把FutureTask对象交给Thread对象
+        Thread t= new Thread(f1);
+        t.start();
+        System.out.println(f1.get());
+第三种方法的优缺点：
+优点：线程任务类是实现接口，可以继续继承类和实现接口！扩展性很强 还能得到处理后的值
+缺点：编程相对复杂！
+
+  3.线程常用方法！ 
+1）获取线程名字 getName（）
+2）设置名称 setName（）
+3）获取当前线程对象currentThread（）
+线程休眠方法（静态方法）
+  1.public static void sleep（long time） 让当前线程休眠指定时间后 再继续执行，单位为毫秒
+  
+  4.线程安全
+线程安全是指多个线程同时操作同一个共享资源的时候可能会出现业务安全问题，称为线程安全问题。
+出现线程安全的原因在于存在多线程并发、同时访问共享资源、存在修改共享资源。
+
+可以使用线程同步来解决问题。
+加锁：把共享资源进行上锁，每次只能一个线程进入访问，然后其他线程才能进来！
+
+加锁的方式：
+  1.同步代码块：把出现线程安全问题的核心代码上锁
+  格式：
+    synchronized（同步锁对象）{操作共享资源的代码}
+  锁对象必须是唯一！可以任意 没有什么意义 只是为了控制！ 建议使用共享资源进行锁对象。
+  对于实例方法可以使用this作为锁关键。
+  对于静态方法可以使用类名.class作为锁关键。
+  2.同步方法 ：把出现线程安全的核心方法给上锁！
+  格式：修饰符 synchronized 返回值类型 方法名称（形参列表）{操作共享资源的代码}
+同步方法也是有隐式锁对象的
+  3.lock锁
+  搞一个lock对象 Lock lock=new ReentrantLock()来构建锁对象
+ 5.线程通信！（了解一下就可以了）
+线程通信就是线程之间相互发送数据，线程通信通常通过共享一个数据的方式实现。 线程通信的前提是线程安全！
+wait() 等待
+notify（） 唤醒正在等待的单个线程
+notifyAll（） 唤醒正在等待的所有线程
+这些方法必须得用同步锁对象进行调用。
+  6.线程池！（热门内容！必须掌握）
+线程池就是一个可以复用线程的技术（创建新线程的开销很大，严重影响系统的性能。）
+线程池实现的API、参数说明：
+  代表线程池的接口：ExecutorService
+  如何得到线程池对象：1.使用ExecutorService的实现类 ThreadPoolExecutor 自动创建一个线程池对象
+                      2.使用Executor调用方法返回不同特点的线程池对象
+ThreadPoolExecutor构造器：public ThreadPoolExecutor（int corepoolSize,int maximumPoolSize,long keepAliveTime,TimeUnit unit,BlockingQueue<Runnable>workQueue,ThreadFactory threadFactory,RejectedExecutionHandler handler）
+1.核心线程：不会死亡的线程 不能小于0
+2.线程池最大能支持的线程数（核心线程+临时线程）
+3.临时线程的最大存活时间 不能小于0
+4.指定存活时间的单位（秒、分、时、天）：unit
+5.指定任务队列：workqueue  不能为null
+6.指定用哪个线程工厂创建线程 threadFactory 不能为null
+7.指定线程忙，任务满的时候，新任务来了怎么办 
+
+线程池处理Runnable任务
+  ExecutorService pools=new ThreadPoolExecutor(3,5,8,TimeUnit.SECONDS, new ArrayBlockingQueue<>(6),Executor.defaultThreadFactory(),new ThreadPoolExecutor.Aborpolicy());
+常用方法： pools.execute(Runnable command) 执行任务，没有返回值！  
+pools.shutdownNow() 立即关闭即使任务没有完成，这样会丢失任务的。
+pools.shutdown()  等全部任务完成后才关闭  建议使用不会丢失任务。
+
+线程池处理Callable任务
+Future<T> submit(Callable<T> task)  执行Callable任务，返回未来任务对象获取线程结果。
+
+
+  
