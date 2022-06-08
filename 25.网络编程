@@ -96,3 +96,94 @@ UDP可以支持广播和组播！
     2.接收端必须绑定该组播ip，端口还要对应发送目的端口999就可以接受组播
     3.DatagramSocket的子类MulticastSocket可以在接收端绑定组播ip
 
+TCP通信
+  在java中客户端只需要使用Socket类即可实现TCP通信，底层就是使用了TCP协议
+  Socket类
+构造器：Socket（String host,int port）创造发送端的Socket对象，参数为ip和端口
+方法：
+  getOutPutStream（） 获得字节输出流对象
+  getInputStream（） 获得字节输入流对象
+案例：客户端发送消息：
+  1.创建客户端Socket对象，与服务器端连接
+  2.使用Socket对象调用getOutputStream（）方法获得字节输出流
+  3.使用字节输出流完成数据的发送
+  4.释放资源：关闭Socket管道
+在java中需要使用ServerSocket类（服务端类）
+构造器：ServerSocket（int port）
+常用方法：
+  1.accept（） 等待接收客户端的Socket通信连接，连接成功后返回Socket对象与客户端建立端到端通信。
+服务器端的流程：
+  1.使用ServerSocket构造Socket 
+  2.调用accept（）方法等待Socket请求
+  3.accept方法返回一个Socket管道，从该管道中获得一个字节输入流
+  4.将该字节输入流包装成一个高级流（缓冲字符输入流），但是缓冲字符输入流智能通过包装字符输入流来获得，所以需要使用转换流（new inputstreamReader(inputstream)）！！
+  5.使用缓冲字符输入流的最快方法（按照行读取数据）
+下面来一个TCP通信的一收一发的案例：
+  客户端：
+ System.out.println("客户端启动成功！");
+        //创建Socket对象
+        Socket s=new Socket(InetAddress.getLocalHost(),7777);
+        //调用输出流方法
+        OutputStream os=s.getOutputStream();
+        //把输出流包装为高级流
+        PrintStream ps=new PrintStream(os);
+        //发送消息
+        ps.println("我是TCP的客户端，我已经与你对接，并发出邀请！！！！约吗？");
+        ps.flush();
+  服务器端：
+System.out.println("服务端启动成功！");
+        try {
+            ServerSocket ser = new ServerSocket(7777);
+            //用accept等待接收连接请求建立管道 返回一个Socket管道
+            Socket s1=ser.accept();
+            //从Socket管道中接收一个字节输入流来读数据
+            InputStream in=s1.getInputStream();
+            //把字节输入流包装为高级流 缓冲字符输入流
+            BufferedReader br=new BufferedReader(new InputStreamReader(in));
+            //按照行读取消息
+            String msg;
+          if((msg=br.readLine())!=null){
+                System.out.println(s1.getRemoteSocketAddress()+"说了"+msg);
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+TCP实现多发多收：
+  客户端：
+    //创建客户端Socket对象
+        Socket s=new Socket("127.0.0.1",8888);
+        //获取字节输出流
+        OutputStream os=s.getOutputStream();
+        //包装成打印流
+        PrintStream ps=new PrintStream(os);
+
+        Scanner sc=new Scanner(System.in);
+        while(true){
+            System.out.println("请说：");
+            String msg=sc.nextLine();
+            if(msg.equals("exit")){
+                break;
+            }
+            ps.println(msg);
+            ps.flush();
+        }
+服务器端：
+  System.out.println("====服务端启动=====");
+        //创建服务器端Socket
+        ServerSocket ser=new ServerSocket(8888);
+
+        //一直接收！
+
+            //等待连接  连接成功的话 返回Socket对象
+            Socket s2=ser.accept();
+            //获取字节输入流
+            InputStream in=s2.getInputStream();
+            //将低端的输入流包装秤高端的缓冲字符输入流
+            BufferedReader br=new BufferedReader(new InputStreamReader(in));
+            String msg;
+        while((msg=br.readLine())!=null){
+            System.out.println(s2.getRemoteSocketAddress()+"说了："+msg);
+        }
+虽然实现了多发多收但如何实现客户端同时接收多个客户端的消息？（感觉要用到多线程！！！！！！！！）  
+  
