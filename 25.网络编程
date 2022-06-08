@@ -185,5 +185,50 @@ TCP实现多发多收：
         while((msg=br.readLine())!=null){
             System.out.println(s2.getRemoteSocketAddress()+"说了："+msg);
         }
-虽然实现了多发多收但如何实现客户端同时接收多个客户端的消息？（感觉要用到多线程！！！！！！！！）  
-  
+虽然实现了多发多收但如何实现服务端同时接收多个客户端的消息？（感觉要用到多线程！！！！！！！！）  
+  需要服务端接收多个客户端的消息、需要使用多线程。
+    服务端接收多个服务端的消息 （重点！！）
+1.引入多线程
+首先在主线程中，写一个死循环，可以接受Socket管道连接
+创建一个类继承Thread类 重写run函数
+   private Socket s1;
+
+    public ServerReaderThread(Socket s) {
+        s1 = s;
+    }
+
+    @Override
+    public void run() {
+        //获取字节输入流
+        try {
+            InputStream in = s1.getInputStream();
+            //将低端的输入流包装成高端的缓冲字符输入流
+            BufferedReader br = new BufferedReader(new InputStreamReader(in));
+            String msg;
+            while ((msg = br.readLine()) != null) {
+                System.out.println(s1.getRemoteSocketAddress() + "说了：" + msg);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+  使用多线程，也可以使用线程池优化！使服务端可以接收多个请求，
+//使用静态变量记住一个线程池对象
+    private static ExecutorService pools=new ThreadPoolExecutor(3,5,6, TimeUnit.SECONDS,
+            new ArrayBlockingQueue<>(2), Executors.defaultThreadFactory(),new ThreadPoolExecutor.AbortPolicy());
+
+    //创建服务器端端口
+    public static void main(String[] args) throws Exception {
+        System.out.println("====服务端启动=====");
+        //创建服务器端Socket
+        ServerSocket ser=new ServerSocket(6666);
+        //定义一个死循环 由主线程负责不断地接收客户端的请求
+        while (true) {
+            //一直接收！
+            //等待连接  连接成功的话 返回Socket对象
+            Socket s2=ser.accept();
+           //每接收到一个客户端的Socket管道，交给一个独立的子线程负责读取消息
+            //开始创建独立子线程！！！
+            System.out.println(s2.getRemoteSocketAddress()+"它来了，上线了！");
+            Runnable target=new ServerReaderRunnable(s2);
+            pools.execute(target);
+            }
