@@ -1,0 +1,114 @@
+案例1： 即时通信！！！
+  即时通信需要端口转发！客户端先把消息发送到服务端。
+客户端还得创建一个线程一直收消息！
+public class ClientDemo3 {
+    public static void main(String[] args) throws Exception{
+        //创建客户端Socket对象
+        Socket s=new Socket("127.0.0.1",9999);
+
+        //创建一个独立的线程，来负责读消息！（服务端随时可以转消息！）
+        new ClientReaderThread(s).start();
+        //获取字节输出流
+        OutputStream os=s.getOutputStream();
+        //包装成打印流
+        PrintStream ps=new PrintStream(os);
+
+        Scanner sc=new Scanner(System.in);
+        while(true){
+            System.out.println("请说：");
+            String msg=sc.nextLine();
+            if(msg.equals("exit")){
+                break;
+            }
+            ps.println(msg);
+            ps.flush();
+        }
+
+    }
+}
+class ClientReaderThread extends Thread {
+    private Socket s1;
+
+    public ClientReaderThread(Socket s) {
+        s1 = s;
+    }
+
+    @Override
+    public void run() {
+        //获取字节输入流
+        try {
+            InputStream in = s1.getInputStream();
+            //将低端的输入流包装秤高端的缓冲字符输入流
+            BufferedReader br = new BufferedReader(new InputStreamReader(in));
+            String msg;
+            while ((msg = br.readLine()) != null) {
+                System.out.println("收到消息：" + msg);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("服务端把你踢出去了！");
+        }
+    }
+}
+
+服务器端
+  public class ServerDemo3 {
+    public static ArrayList<Socket> sa=new ArrayList<Socket>();//定义一个集合存储所有在线设备！
+    //创建服务器端端口
+    public static void main(String[] args) throws Exception {
+        System.out.println("====服务端启动=====");
+        //创建服务器端Socket
+        ServerSocket ser=new ServerSocket(9999);
+        //定义一个死循环 由主线程负责不断地接收客户端的请求
+        while (true) {
+            //一直接收！
+            //等待连接  连接成功的话 返回Socket对象
+            Socket s2=ser.accept();
+            System.out.println(s2.getRemoteSocketAddress()+"来了老弟！");
+            sa.add(s2);
+           //每接收到一个客户端的Socket管道，交给一个独立的子线程负责读取消息
+            //开始创建独立子线程！！！
+            new ServerReaderThread(s2).start();
+            }
+        }
+
+    }
+class ServerReaderThread  extends Thread {
+    private Socket s1;
+
+    public ServerReaderThread(Socket s) {
+        s1 = s;
+    }
+
+    @Override
+    public void run() {
+        //获取字节输入流
+        try {
+
+            InputStream in = s1.getInputStream();
+            //将低端的输入流包装秤高端的缓冲字符输入流
+            BufferedReader br = new BufferedReader(new InputStreamReader(in));
+            String msg;
+            while ((msg = br.readLine()) != null) {
+                System.out.println(s1.getRemoteSocketAddress() + "说了：" + msg);//下面还要转发！
+                sendMsgToAll(msg);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            System.out.println(s1.getRemoteSocketAddress()+"下线啦，下次再来奥！");
+            ServerDemo3.sa.remove(s1);
+        }
+    }
+
+    private void sendMsgToAll(String msg) {
+        for (Socket socket : ServerDemo3.sa) {
+            try {
+                PrintStream ps=new PrintStream(socket.getOutputStream());
+                ps.println(msg);
+                ps.flush();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+}
