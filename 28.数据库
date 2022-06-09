@@ -1,0 +1,96 @@
+javaweb整个的技术栈：HTTP协议（通信协议，需要知道数据的传输等等）、TomCat（Web服务器，负责与一些客户端连接网络通信，以多线程的方式！我们不需要担心这些多线程通信，但是需要
+学会使用！）、编写java程序时我们还要学会Servlet/Filter/Listener、JDBC（java程序需要与数据库进行交互，连接数据库并返回数据库数据）、MySQL以及SQL语言（操作数据库）、
+HTML/CSS/JAVASCRIPT（我们不需要过多的掌握，但是也要会一点，这些主要是前端的工作）
+主要分为：
+  1.数据库：MySQL、JDBC、Maven、MyBatis
+  2.前端：HTML、CSS、JavaScript、Ajax+Vue+Element
+  3.JavaWeb核心技术：TomCat+HTTP+Servlet、Request+HTTP+Servlet、JSP、Cookie+Response、Filter+Listener、综合案例
+今天学习数据库概念、以及常用的MySQL、常用的SQL语言
+  数据库：存储数据的仓库，数据库是有组织的。
+  数据库管理系统（DBMS）：管理数据库的大型软件
+  SQL（很重要） 结构化查询语言。操作关系型数据库的编程语言。
+MySQL数据库（DBMS，数据库管理系统）
+  bin文件夹里面存放的都是一些可执行文件、docs里面装的都是一些文档、include里面是一些.h文件，lib里面存放的是一些库。
+通过 net start mysql 就可以开始mysql数据库。
+MySQL服务器就是安装了MySQL的计算机，可以对外提供存储和提取数据的服务
+MySQL数据模型：
+  MySQL是一个关系型数据库。关系型数据库就是多张相互连接的二维表组成的。
+这种关系型数据库的优点：
+  1.使用表结构，格式一致、易于维护
+  2.使用通用的SQL语言操作，使用方便，便于复杂查询
+  3.数据存储在硬盘中 安全。
+在mysql中数据库就是一个个的文件夹
+可以通过DBMS来创建多个数据库DB，一个数据库中包含多个数据表（table），数据表中有很多文件。
+下面学习SQL语言：
+  SQL是关系型数据库的统一标准，可以用SQL操作所有关系型数据库
+SQL可以单行和多行书写，结束时接分号（;）！
+SQL语句不区分大小写，但是建议关键字都使用大写
+注释：1.单行注释：1）-- 注释内容（两个横杠 一个空格） 2）#注释内容(MySQL特有）
+      2.多行注释：/* 注释内容*/
+SQL的分类： DDL（数据定义语言）、DML（数据操作语言）、DQL（数据查询语言）、DCL（数据控制语言）
+  DDL：操作数据库和表等数据的语句
+  DML：操作数据的语句，对表的数据进行增删改操作
+  DQL：对表的数据进行查的操作
+  DCL：对数据库进行权限控制
+DDL：数据定义语句
+  对于数据库的操作有四种：查询、创建、删除、使用
+show databases; imformation_schema 是一种视图
+创建自己的数据库 create database 数据库名称
+create database db1；
+但是如果数据库已存在，就会报错 所以一般创建的时候会判断一下
+create database if not exists db1;
+  删除数据库：
+  drop database if exists 数据库名称
+drop database if exists db2;
+使用数据库
+  use 数据库名称
+查看当前使用数据库名称：
+  select database();
+DDL还可以操作表：
+创建（Create） create table 
+查询（Retrieve） show tables;
+修改（Update） alert table 表名...
+删除（Delete）drop if exists
+增删改查（CRUD）
+  1.查询表
+show tables； 查询当前数据库下所有表的名称
+desc 表名; 查询表的结构
+结构分为：field（字段）、type（该字段内内容所填的类型）、描述信息
+ 2.创建表
+ create table 表名称（字段1 数据类型1，字段2 数据类型2，...，字段名n 数据类型n）；
+ 比如创建一个tb_user表
+在SQL中字符串是varchar(20)类型 且需要规定最大长度！
+SQL中的数据类型：大致有三种 1.数值类型 2.日期类型 3. 字符串类型
+1.数值类型
+  整数：tinyint(1个字节),smallint,mediumint,int,bigint
+  小数：float,double,decimal
+  double（总长度，小数点后保留的位数）
+2.日期类型
+  date（日期值）、time（时间值或持续时间）、year（年份值）、datatime（混合日期和时间）、timestamp（混合日期和时间值，时间戳）
+3.字符串类型
+ char()定长,varchar()变长
+做一个小案例：做一个学生表
+ create table student(
+    -> id int,
+    -> name varchar(10),
+    -> gender char(1),
+    -> birthday date,
+    -> score double(5,2),
+    -> email varchar(50),
+    -> tel varchar(20),
+    -> status tinyint);
+  3.删除
+  drop table 表名称;
+  drop table if exists 表名;
+  4.修改表（很复杂啊 因为表有 1、表名 2、增加列 3、修改某个数据类型 （用modify关键字） 4、修改列名和数据类型（用change关键字） 5、删除列） 感觉操作表数据就是通过列名。
+1.修改表名 alter table 表名 rename to 新表名
+2.增加一列 alter  table 表名 add 列名 属性
+3.修改某个数据类型 alter table 表名 modify 列名 新数据类型
+4.修改列名和数据类型  alter table 表名 change 列名 新列名 新数据类型
+5.删除列 alter table 表名 drop 列名
+
+开发过程中不会再命令行窗口写sql 可以使用Navicat使用sql
+
+
+DML：数据操作语言 包括增删改操作
+  
