@@ -1,0 +1,57 @@
+本节要学习：约束（对value进行约束）、数据库设计、多表查询、事物
+约束用于限制加入表中的数据！
+  1.非空约束 not null
+  2.唯一约束 unique
+  3.主键约束  一行数据的唯一标志吗，要求非空且唯一 primary key
+  4.检查约束  
+  5.默认约束
+  6.外键约束
+但是在mysql不支持检查约束。
+auto_increment： 当列是数字类型且受唯一约束可以实现自动增长！
+
+外键约束：
+  格式：[constraint] 外键名称 foreign key（外键列名） reference 主表（主表列名）
+案例：
+  CONSTRAINT fk_emp_dep FOREIGN KEY(dep_id) REFERENCES dep(id)
+删除外键：
+  alter table emp drop Foreign key fk_emp_dpt
+建表后添加外键
+  alter table emp add Constraint fk_emp_dept foreign key(dep_id) referrence dep(id)
+
+数据库设计：
+  数据库设计就是设计哪些表、表里有哪些字段、表和表之间有哪些关系
+数据库设计步骤：
+  1.需求分析（数据是什么？数据有哪些属性？数据与属性的特点是什么？）
+  2.逻辑分析（ER图）
+  3.物理设计
+  4.维护设计
+表关系：
+  1.一对一
+  2.一对多（多对一）
+  3.多对多
+1.一对多：部门和员工！
+  实现方式：在多的一方建立外键指向一的一方主键！ constraint fk_ADC_zhong  foreign key （外键列名） references 主表（列名）
+2.多对多：如订单和商品
+  实现方式：需要建立第三张中间表来实现，中间表至少包含两个外键 分别关联两方主键！
+3.任意一方 加入外键 关联另一方主键 并且设置外键为unique。
+
+  多表查询：
+    select * from 表名1，表名2 
+    但是这种情况会出现很多种情况 产生笛卡尔积种情况。需要消除无效数据
+    select * from 表名1，表名2 where emp.dep_id=dep.id
+ 多表查询可以分为连接查询和子查询，连接查询可以分为 内连接（查AB交集数据）和外连接（左外连接和右外连接）
+ 1.内连接：
+  隐式内连接：select 字段 from 表1，表2 where 条件
+  显示内连接： select 字段 from 表1 inner join 表2 on 条件
+ 2.外连接
+  select 字段 from 表1 left outer join 表2 on 条件
+  select 字段 from 表1 right outer join 表2 on 条件
+子查询 :嵌套查询（嵌套查询就是查询中嵌套查询 称为子查询）
+  select salary from emp where name='猪八戒';#如果这个答案是3600.
+  再来一个：  select * from emp where salary >3600;
+  但是也可以合二为一！即：select * from emp where salary>(select salary from emp where name='猪八戒')
+子查询 可以分为：单行单列、多行单列、多行多列
+  
+  
+  
+  
