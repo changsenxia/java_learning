@@ -90,7 +90,61 @@ SQL中的数据类型：大致有三种 1.数值类型 2.日期类型 3. 字符�
 5.删除列 alter table 表名 drop 列名
 
 开发过程中不会再命令行窗口写sql 可以使用Navicat使用sql
-
+DDL：对于数据库 创建create database if not exists 删除drop   查询 show databases;
+对于表：创建新表 create table 表名(); 删除 drop table 表名 if exists； 查询 show tables; 
+修改 alter table 表名 add 列名 值类型 
+alter table 表名 rename to 新表名
+alter table 表名 drop 列名
+alter table 表名 modify 列名 新数据类型
+alter table 表名 change 列名 新列名 新数据类型
 
 DML：数据操作语言 包括增删改操作
+  分为增（insert）  删（delete）  改（update）  
+  1.增
+给制定列增加数据：
+  insert into 表名（列1，列2）values（值1，值2）;
+给全部列添加数据
+  insert into 表名 values（）
+批量增加数据：
+  insert into 表名（列1，列2,...）values（值1，值2，...）,（值1，值2，...）,（值1，值2，...）
+  insert into 表名 values（值1，值2，...）,（值1，值2，...）,（值1，值2，...） #一下子添加多个行
+  2.改  Update
+  update 表名 set 列名1=值1,列名2=值2，....[where 条件]
+如果修改语句没加where语句就会造成所有列的值都改变。
+
+3.删除 
+delete from 表名 where
+如果不加where 那么所有数据都会被删除。
+
+DQL 对数据进行查询！
+  查询基本语法： 
+  select 字段 from 表名 where 条件列表 group by 分组字段 having 分组后的条件 order by 排序字段 limit 分页限定 
+查询分为 基础查询、条件查询、分组查询、排序查询、分页查询
+  1.基础查询
+  select 列名1,列名1 from 表名;
+  基础查询还可以去除重复：select distinct 列名 from 表名
+展示的时候还可以给列名起别名
+select distinct 列名 as... from 表名
+  2.条件查询
+select 字段列表 from 表名 where 条件列表
+  条件列表有几个特殊的： between...and...、 in（....）多选一、like 占位符 模糊查询（_单个任意字符，%任意个字符）、 is null、is not null  
+  模糊查询 相对于等值查询， 
+  3.排序查询 需要使用order by字段
+select 字段 from 表名 order by 排序字段1 [排序方式1]，排序字段2 [排序方式2]
+排序方式  asc 升序（默认）、desc 降序
+  4.分组查询
+聚合函数：将一列作为一个整体，进行纵向计算。
+  count（）、max（）、min()、sum（）、avg（）
+select 聚合函数名（列名） from 表
+  分组查询：使用group by关键字！
+如果分组还有条件 需要加where
+select sex,avg(math),count(*) from stu where math>70 group by sex
+分组之后还要进行条件筛选的 用 having！
+  5.分页查询 limit
+  select 字段列表 from 表名 limit 起始索引，查询条目数;
+  起始索引从0开始
+  
+
+  
+  
   
