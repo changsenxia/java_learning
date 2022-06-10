@@ -1,3 +1,71 @@
 JDBC 就是使用Java语言操作关系型数据库的一套API！
 使用同一套java代码操作不同类型的关系型数据库！！
 JDBC 就是一套接口，各个关系型数据库都定义了自己的实现类（其实就是驱动！）
+JDBC连接数据库的步骤：
+  1.创建工程 创建一个lib包，包里导入驱动jar包 并且要add as libirary
+  2.利用反射注册驱动： Class.forName("com.mysql.jdbc.Driver")；
+  3.获取连接： Connection conn=DriverManager.getConnection(url,username,password);
+  4.定义sql语句  String sql="update 表名 set...."
+  5.获取执行sql对象： Statement stmt=conn.createStatement();
+  6.执行：stmt.executeUpdate(sql)'
+  7.处理返回结果
+  8.释放资源
+总的来说，先导包然后注册驱动，注册完成后获取mysql连接，连接完成后定义你sql操作，然后获取执行该mysql语句的对象 使用该对象执行该mysql语句。
+案例：
+  public class JdbcDemo {
+    public static void main(String[] args) {
+        //1.注册驱动
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+         //2.获取连接
+            String url="jdbc:mysql://localhost:3306/db1";
+            String username="root";
+            String password="123456";
+            Connection conn= DriverManager.getConnection(url,username,password);
+            //定义sql语句
+            String sql="update emp set salary=4000 where id=1";
+            Statement stmt=conn.createStatement();
+            int count=stmt.executeUpdate(sql);
+            //处理
+            System.out.println(count);
+            //释放资源
+            stmt.close();
+            conn.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+}
+    JDBC的API详解
+1.DriverManager：   //获取连接 
+2.Connection：   //连接类型
+3.Statement：   //获取sql执行对象
+4.ResultSet：   //结果器对象
+5.PreparedStatement：
+  一、驱动管理类 DriverManager类
+    1.注册驱动
+    2.获取数据库连接
+从mysql5 开始class.forname()可以不写 
+  DriverManager：
+    获取连接 getConnection（url,username,password）
+    url:jdbc:mysql://ip地址:端口号/数据库名称  参数键值对1&...
+  二、Connection 数据库连接对象！
+    1.获取执行sql对象
+    2.管理事务
+1.获取sql对象
+  普通执行sql对象
+  Statement stmt=conn.createstatement();
+  预编译sql的执行sql对象：
+    preparedStatement（sql） //防止sql注入
+2.管理事务
+  JDBC定义了三个管理事务的方法
+    开启事务“ setAutoCommit（boolean ） true 为自动提交 false 为不自动提交即开启事务！
+    提交 commit（）
+    回滚 rollback（） 用异常机制 只要捕捉到异常就可以事务回滚！
+  开启事务一般在对象操作sql之前！
+三、statement类
+  1.执行sql语句
+分为两种 一种是对 DDL、DML这两种的操作时 executeUpdate（） 返回一个int类型 被改变的行数！
+另一种是对DQL的操作 executeQuery（） 返回一个resultSet的结果集对象
+
