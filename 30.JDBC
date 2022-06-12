@@ -69,3 +69,104 @@ JDBC连接数据库的步骤：
 分为两种 一种是对 DDL、DML这两种的操作时 executeUpdate（） 返回一个int类型 被改变的行数！
 另一种是对DQL的操作 executeQuery（） 返回一个resultSet的结果集对象
 
+四、ResultSet（结果集对象）
+  封装了DQL查询语句的结果
+使用 执行对象的 executeQuery(sql)；  返回一个resultset类型
+有两个方法： next（） 1）将光标从当前位置乡下移动一行 2）判断当前行是否为有效行 true 有效行  false 无效行
+
+xxx  getXxx(参数)  获取数据  参数可以为 列号 也可以是列名！
+案例：
+   String url="jdbc:mysql://localhost:3306/db1";
+            String username="root";
+            String password="123456";
+            Connection conn= DriverManager.getConnection(url,username,password);
+            //定义sql语句
+            String sql="select * from emp";
+            Statement stmt=conn.createStatement();
+            conn.setAutoCommit(false);//开启事务！
+            ResultSet rs=stmt.executeQuery(sql);
+            //处理结果
+            while(rs.next()){
+                //获取xxx
+                int id=rs.getInt(1);
+                String name=rs.getString(2);
+                Date date=rs.getDate(3);
+                double money=rs.getDouble(4);
+                System.out.println(id);
+                System.out.println(name);
+                System.out.println(date);
+                System.out.println(money);
+        }
+            //释放资源
+        rs.close();
+            stmt.close();
+            conn.close();
+
+下面来一个ResultSet案例来进一步掌握
+  需求：查询emp账户表数据 封装为Emp对象中，并存储到ArrayList集合中：
+  public class JdbcDemo5_ResultSet2 {
+    public static ArrayList<Emp> arr = new ArrayList<Emp>();
+    public static void main(String[] args) throws Exception{
+        //1.注册驱动
+
+
+            //Class.forName("com.mysql.cj.jdbc.Driver");
+            //2.获取连接
+            String url="jdbc:mysql://localhost:3306/db1";
+            String username="root";
+            String password="123456";
+            Connection conn= DriverManager.getConnection(url,username,password);
+            //定义sql语句
+            String sql="select * from emp";
+            Statement stmt=conn.createStatement();
+            //conn.setAutoCommit(false);//开启事务！
+            ResultSet rs=stmt.executeQuery(sql);
+            //处理结果
+            while(rs.next()){
+                //获取xxx
+                int id=rs.getInt(1);
+                String name=rs.getString(2);
+                Date date=rs.getDate(3);
+                double money=rs.getDouble(4);
+                arr.add(new Emp(id,name,money));
+        }
+        System.out.println(arr);
+            //释放资源
+        rs.close();
+            stmt.close();
+            conn.close();
+
+
+    }
+}
+五、preparedStatement
+  作用：预防SQL注入问题  
+SQL注入是通过操作输入来修改定义好的SQL语句用以达到执行代码对服务器进行攻击的方法
+  SQL注入演示，完成用户登录
+  select * from tb_user where username='zhangsan'and password='123';
+  一定要防止 SQL注入 通过preparedStatement
+  1.获取Pstmt对象 且sql语句中的参数值用问号占位符代替
+preparedStatement pstmt=conn.preparedStatement(sql);
+  2.设置参数值
+preparedStatement对象：setXxx(参数1，参数2)  给问号 赋值
+参数1： ？的位置编号，从1开始
+参数2： ？的值
+
+
+    数据库连接池！
+数据库连接池是一个容器，负责分配、管理数据库连接
+好处： 资源重用、提升系统响应速度、避免数据库连接遗漏
+数据库连接池 接口  DataSource 
+常见的 数据库连接池：
+DBCP
+C3P0
+Druid
+均有一个获取连接功能  Connection getConnection（）
+Druid使用步骤：
+1.导入jar包
+2.定义配置文件
+3.加载配置文件
+4.获取数据库连接池对象
+5.获取连接
+
+
