@@ -1,0 +1,69 @@
+所有的网页都是用HTML语言写出来的，HTML（HyperText Markup Language）：超文本标记语言
+为什么叫超文本：  超越了文本限制，比普通文本更强大，除了文字还可以定义图片、视频、音频
+标记语言： 由标签构成的语言
+  浏览器内置了解析HTML标签
+  HTML的标签都是预定义好的，使用<HTML>展示图片
+W3C标准：网页由三部分组成
+  结构： HTML 最基础的
+  表现：CSS  加一些样式
+  行为：JavaScript  加一些与用户的行为互动
+HTML快速入门：
+  新建文本文件，后缀名改为.html
+  编写HTML结构标签
+  在<body>中定义文字
+  根标签 <html> </html>
+  然后再来一个<head></head>
+在head标签里  网页小标签的标题 用<title></title>  
+再来一个<body> </body> 在body中定义文字
+小案例：
+  <head>
+<title>
+	吃药了吗你？
+</title>
+</head>
+<body>
+  我以后每天都提醒你吃药药
+</body>
+还可以通过<font color="颜色">来 修改字体颜色
+
+html的标签都是不区分大小写的
+HTML的语法比较松散
+  1.基础标签
+<h1>-<h6>  定义标题，h1最大，h6最小
+<font> 定义文本的字体、尺寸、颜色 （字体用 font face、尺寸用 size、颜色用colo
+<b> 定义粗体文体
+<i> 定义斜体文本
+<u> 定义文本下划线
+<center> 定义文本居中
+<p> 段落
+<br> 定义折行（换行）
+<hr>  定义水平线
+在HTML中表示颜色：1.用英文单词：red,pink,blue
+                  2.用RGB   rgb(值1，值2，值3） 值的取值范围 0-255
+                  3.值1值2值3：十六进制  00~FF
+案例：
+  <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>小案例</title>
+</head>
+<body>
+<h1>公司简介</h1>
+<hr color="yellow">
+<p>
+    <font color="red">传智教育</font>（股票代码003032），隶属于江苏传智科技股份有限公司，注册资本4亿，是第一个实现A股IPO的教育企业
+    公司致力于培养精尖数字化人才，主要培养人工智能，python....
+</p>
+<p>
+    我们的使命是：<b> 为中华名族伟大复兴而讲课！</b>
+</p>
+<hr color="yellow">
+
+</body>
+</html>
+介绍完 基础标签后 下面介绍 图片、音频、视频标签！！！！
+
+
+
+
