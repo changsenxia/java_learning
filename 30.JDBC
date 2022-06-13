@@ -169,4 +169,52 @@ Druid使用步骤：
 4.获取数据库连接池对象
 5.获取连接
 
+小案例：
+  1.完成品牌数据的增删改查操作
+查询：select
+添加 insert into
+删除 drop delete
+修改 update
+  1.创建tb_brand MySQL表
+  2.实体类 brand类的创建
+public class Test2Pool {
+    public static void main(String[] args) throws Exception{
+        //获取Connection连接
+        Properties props=new Properties();
+        props.load(new FileInputStream("F:\\Java study video\\code\\jdbc\\jdbc-demo\\src\\druid.properties"));
+        //获取连接池对象
 
+        DataSource dataSource= DruidDataSourceFactory.createDataSource(props);
+        //获取数据库连接
+        Connection conn=dataSource.getConnection();
+
+
+        //定义sql语句
+        String sql="select * from tb_brand;";
+        //通过preparedStatement对象执行语句
+        PreparedStatement pstmt=conn.prepareStatement(sql);
+        //执行参数 但是这边不需要什么执行参数
+
+        //执行语句
+        ResultSet rs = pstmt.executeQuery();
+
+        //处理结果
+        List<Brand> arr=new ArrayList<Brand>();
+        while(rs.next()){
+            //封装对象 然后装入容器内
+            int id = rs.getInt("id");
+            String brandName = rs.getString("brand_name");
+            String companyName = rs.getString("company_name");
+            int ordered = rs.getInt("ordered");
+            String description = rs.getString("description");
+            int status = rs.getInt("status");
+            arr.add(new Brand(id,brandName,companyName,ordered,description,status));
+        }
+        System.out.println(arr);
+        //资源释放
+        rs.close();
+        pstmt.close();
+        conn.close();
+    }
+}
+目前来说使用数据库连接池操作数据库 可以分为：1.获取连接池对象 2.通过连接池对象获取连接对象  3.定义sql语句 4. 获取preparedStatement对象 使用该对象执行sql语句。
