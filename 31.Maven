@@ -1,1 +1,31 @@
 Maven是一套用于管理和构建java项目的工具。
+作用：1.提供标准化项目结构  所有的ide使用Maven构建的项目结构完全一样，可以通用
+2.提供一套标准化的构建流程（编译、测试、打包、发布）
+3.提供一套依赖管理机制
+
+依赖管理就是管理项目所依赖的第三方资源（jar包  插件）
+  Maven提供一套简单的命令构建依赖
+1.Maven 安装配置
+  maven 中有三种不同的仓库：本地仓库（自己计算机上的一个目录）、中央仓库（maven团队维护的全球唯一仓库）、远程仓库（私服）
+配置主要是 配置本地目录以及在本地目录下配置一个阿里云的私服。
+
+2.MAven基本使用
+  常用命令： compile 编译、clean 清理、test 测试、package 打包 、install 安装
+  maven生命周期： 清理的生命周期、default生命周期。
+  default： compile、test、package、install
+     执行后面的命令、前面的命令会自动执行
+  clean：清理工作
+    pre-clean、clean、post-clean
+    
+使用idea配置maven。
+  maven坐标详解：坐标是资源的唯一标识，使用坐标来定义项目或引入项目中需要的依赖
+坐标组成：
+  1.groupid：定义项目隶属组织名称
+  2.artifactid：定义当前maven项目名称
+  3.version：当前版本
+3.依赖管理
+  
+  
+  
+  
+  
