@@ -76,6 +76,100 @@ src（路径可以是绝对路径和相对路径....都可以）、height、widt
 列表：分为有序列表（order list）和无序列表（UNorder list）
 有序列表有ol来定义 每一项用li包裹
 无序列表用ul来定义 每一项用li包裹
+ol 有一个属性  type
+
+表格标签：<table> 定义表格
+border、width、cellspacing
+<tr>定义行  
+<td>单元格 
+<th>定义表头单元 
+ 
+布局标签（用css来搞的一般）  但是HTML也有相对应的标签
+<div> 定义HTML文档中的一个区域部分，经常喝css一起使用，用来布局网页  沾满一整行！！！
+<span> 用于组合行内元素 只会占用文字占用的地方
+ 
+表单标签： 在网页中主要负责数据采集功能！
+<form> 用来定义表单
+表单项（元素）  不同类型的input元素、下拉列表、文本域等
+<form>  有两个属性：action、method
+action规定当提交表单时 向何处发送表单数据，URL。 表单项数据要想被提交，则必须指定其name属性！
+method：规定用于发送表单数据的方式
+1.get： 默认值 
+get请求 请求参数会拼接在URL后面
+2.post：
+  请求参数会在http协议后面
+表单项！！！！ 一共也就三种！
+<input>  表单项，通过type属性控制输入形式
+type取值有很多！！
+  1.text 默认值 定义单行输入字段
+  2.password  定义密码字段 
+  3.radio 定义单选按钮  单选框要互斥 只要单选name属性值一样就可以
+  4.CheckBox  定义多选框
+  5.file 定义文件上传按钮
+  6.hidden 定义隐藏的输入字段
+  7.submit 定义提交按钮，会把表单数据发送到服务器
+  8.reset 定义重置按钮
+  9.button 定义可点击按钮
+<select> 定义下拉列表 <option>定义列表项
+<textarea> 文本域 可以多行！！！！
+案例：
+	<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Test</title>
+</head>
+<body>
+    <form>
+        <label for="1">用户名：</label>
+        <input type="text" name="username" id="1">
+        密码：<input type="submit" name="password">
+        <br>
+        <input type="password">
+        <input type="submit" value="登录！">
+        <br>
+        <input type="radio" name="2" value="1" id="3"> <label for="3">男</label>
+        <input type="radio" name="2" value="2" id="4"> <label for="4">女</label>
+        <br>
+        爱好：<input type="checkbox" name="hobby" value="travel">旅游
+        <input type="checkbox" name="hobby" value="film">电影
+        <input type="checkbox" name="hobby" value="game">游戏
+        <br>
+        <input type="file" value="上传头像">
+        <input type="reset" value="重置">
+        <br>
+        <input type="button" value="一个很普通的按钮">
+        <br>
+        城市：
+        <select>
+            <option>扬州</option>
+            <option>南京</option>
+            <option>苏州</option>
+            <option>无锡</option>
+            <option>常州</option>
+            <option>泰州</option>
+        </select>
+    </form>
+</body>
+</html>
+
+	CSS：层叠样式表
+1.CSS如何和HTML结合使用
+2.如何写css代码 用一个键值对
+3.属性
+  一、CSS导入方式（一共有三种）
+  1.内联样式：在标签内部使用style属性 属性值是css属性键值对 (用的比较少！）
+  <div style="color:red">hello css</div>
+  2.内部样式：定义style标签 在标签内部定义 （用的较多！）
+  <style> div{color:red}</style>
+  3.外部样式：定义link标签，导入外部的css文件 
+  <link href="" rel="stylesheet"> 
+二、选择器
+选择器一共有三种，一种是元素选择器、id选择器还有类选择器   谁选择的范围越小 谁生效！
+1.元素选择器 元素名称{}
+2.id 选择器  #id属性值{}
+3.类选择器 .class属性值{}
+三、属性
 
 
 
