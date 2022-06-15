@@ -100,3 +100,16 @@ getElementsByClassName
 <input type="button" id ="btn">
   document.getElementById("btn").onclick=function(){alert("我被点击了！")}
 常见事件：onclick、onblur（元素失去焦点）、onfocus（元素获得焦点）、onsubmit（表单提交时触发）、onkeydown（键盘被按下）、onmouseover（鼠标在某元素之上）、onmouseout（鼠标从某元素移开）
+
+    正则表达式！！！
+^ 表示开始
+$ 表示结束
+\w 相当于[0-9 a-z A-Z]
+\d 数字 相当于[0-9]
+.任意单个字符！
++至少一个 相当于{1，}
+* 0个或多个
+？ 0个或1个
+用reg.test（str）去测试 是否符合规则。
+
+    
