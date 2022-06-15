@@ -74,3 +74,29 @@ Location对象
 属性：href（） 设置或返回完整的URL
 
 DOM 文档对象模型
+  将标记语言的各个组成部分封装成对象。
+  1.Document 整个文本对象
+  2.Element 元素对象
+  3.Attribute：属性对象
+  4.Text：文本对象
+  5.Comment：注释对象
+JavaScript可以通过DOM对HTML进行操作：操作包含：改变HTML 元素内容、改变样式、对HTMLDOM事件 作出反应、添加和删除HTML
+  1.获取Element对象  通过Document对象直接获取
+  2.常见HTML Element对象的使用
+一、获取Element对象：
+getElementById
+getElementsByTagName
+getElementsByName
+getElementsByClassName
+获取元素对象后，可以通过style属性设置css样式 也可以通过innerHTML设置元素内容  主要就是查文档
+  事件监听！！！！
+什么是事件？
+发生在HTML元素上的事情：例如，按钮被点击、鼠标移动到元素上面、按下键盘按键
+事件监听：JavaScript可以在事件被侦测到时执行某些代码 
+  事件绑定：方式1： 通过HTML标签中的时间属性进行绑定
+例如： <input type="button" onclick="on" value="开灯">
+  function on（）{alert("我被点击了！")}
+方式2：通过DOM元素属性绑定
+<input type="button" id ="btn">
+  document.getElementById("btn").onclick=function(){alert("我被点击了！")}
+常见事件：onclick、onblur（元素失去焦点）、onfocus（元素获得焦点）、onsubmit（表单提交时触发）、onkeydown（键盘被按下）、onmouseover（鼠标在某元素之上）、onmouseout（鼠标从某元素移开）
