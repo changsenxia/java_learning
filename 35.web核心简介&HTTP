@@ -1,0 +1,63 @@
+web：全球广域网
+javaweb：是用java技术来解决web互联网领域的技术栈
+静态资源：HTML、css、JavaScript、图片等，负责页面展现
+动态资源、Servlet、JSP  负责逻辑处理。
+数据库：负责存储数据。
+B/S架构中，浏览器会向服务器发送一些请求，请求 有Servlet、JSP然后访问数据库 获取数据 再把数据给前端页面 将HTML代码发给服务器。
+通信：HTTP协议
+web服务器：负责解析HTTP协议，解析请求数据，并发送相应数据
+web核心 主要就是：
+  1.HTTP协议
+  2.Tomcat web服务器
+  3.Servlet、JSP
+Request、Response
+会话技术（cookie、session）
+过滤器（filter）、监听器（listener）
+前端相关技术：ajax、vue、ElementUI
+后面再来一个综合案例！！！！糅杂javaweb学
+
+一、HTTP
+  HTTP（HyperText Transfer Protocol） 超文本传输协议：  规定了浏览器和服务器之间数据传输的规则
+HTTP协议：基于TCP协议  
+基于请求响应模型：一次请求对应一次响应
+  HTTP请求数据格式：请求数据分为3部分
+  1.请求行：请求数据的第一行，其中get表示请求方式、/表示请求路径资源、HTTP/1.1 表示协议版本
+  2.请求头：从第二行开始，格式为 key：value形式
+  3.请求体： post请求的最后一部分
+请求方式目前已知的是get和post  get请求方式请求的参数在请求行中，没请求体，post请求的参数在请求体中，get有参数大小限制，post没有
+  响应数据分为三部分：
+    1.响应行：200表示成功的状态码 ok表示状态码描述
+    2.响应头：第二行开始，格式为key：value形式
+    3.响应体：最后一部分，存放响应数据
+Tomcat软件：
+  屏蔽掉了与HTTP协议交互的那一块 专注于 逻辑处理：
+二、web服务器就是一个应用程序（软件）在服务器端安装Tomcat
+用Tomcat部署web项目，需要在idea中创建maven web项目，使用Tomcat。
+Tomcat也被称为web容器、Servlet容器、Servlet需要依靠Tomcat才能运行。
+Web服务器的作用：1.封装HTTP协议操作 简化开发 2.可以将web项目部署到服务器中，对外提供网上浏览项目
+  Tomcat的配置：
+1.修改端口号：conf/server.xml
+<connector port="8080>
+
+idea中创建maven web项目
+  1.使用骨架
+使用 maven创建 web-app来创建
+<packaging>:打包方式：
+  *jar 默认值
+  *war web项目需要改成war
+  2.不使用骨架
+在idea中使用Tomcat：
+1.集成本地Tomcat  将本地Tomcat集成到idea中
+2.使用Tomcat maven插件 
+ 1.在pom.xml中添加Tomcat插件
+ 2.使用maven helper插件快速启动项目 右键---run maven----Tomcat 7：run
+Servlet： 是java提供的一门动态web资源开发技术
+
+
+
+
+
+
+
+
+
